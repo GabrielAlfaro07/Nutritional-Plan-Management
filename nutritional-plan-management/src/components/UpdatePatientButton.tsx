@@ -1,10 +1,9 @@
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate } from "react-router-dom";
 const UpdatePatientButton = () => {
   const { patientId } = useParams<{ patientId: string }>(); // Obtiene el ID del paciente de los parámetros de la URL
   const navigate = useNavigate();
   const handleUpdate = () => {
     navigate(`/UpdatePatient/${patientId}`);
-    
   };
 
   return (
