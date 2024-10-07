@@ -1,5 +1,4 @@
 import { PatientData } from "../components/PatientForm";
-import { Patients } from "../components/List";
 import { db } from "../../firebaseConfig";
 import {
   collection,
@@ -8,13 +7,8 @@ import {
   getDoc,
   addDoc,
   updateDoc,
-  setDoc,
   deleteDoc,
-  query,
-  where,
 } from "firebase/firestore";
-
-const PATIENTS_COLLECTION = "patient";
 
 // Función para generar una contraseña basada en apellido y mes de nacimiento
 const generatePassword = (
