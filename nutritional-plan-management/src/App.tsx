@@ -6,6 +6,7 @@ import AddPatient from "./Admin/addPatient";
 import PatientProfile from "./Admin/PatientProfile";
 import PatientsList from "./Admin/PatientsList";
 import UpdatePatient from "./Admin/UpdatePatient";
+import Header from "./components/headers/Header";
 
 const App: React.FC = () => {
   return (

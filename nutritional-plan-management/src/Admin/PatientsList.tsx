@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Patients } from "../components/List";
 import { getPatients } from "../service/patient";
 import List from "../components/List";
-import SearchBar from "../components/SearchBar";
+import SearchBar from "../components/searchbars/SearchBar";
 
 const PatientList = () => {
   const [patients, setPatients] = useState<Patients[]>([]); // Store the list of patients
