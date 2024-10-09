@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import PatientForm from "../components/PatientForm";
 import { PatientData } from "../components/PatientForm";
-import { addPatient } from "../service/patient";
+import { addPatient } from "../services/patient";
 import { useNavigate } from "react-router-dom";
 
 const AddPatient = () => {

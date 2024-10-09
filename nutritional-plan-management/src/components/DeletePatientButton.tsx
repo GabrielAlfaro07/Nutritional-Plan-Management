@@ -1,5 +1,5 @@
 import { useParams, useNavigate } from "react-router-dom";
-import { deletePatient } from "../service/patient";
+import { deletePatient } from "../services/patient";
 import { useState } from "react";
 
 const DeletePatientButton = () => {

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Patients } from "../components/List";
-import { getPatients } from "../service/patient";
+import { getPatients } from "../services/patient";
 import List from "../components/List";
 import SearchBar from "../components/searchbars/SearchBar";
 

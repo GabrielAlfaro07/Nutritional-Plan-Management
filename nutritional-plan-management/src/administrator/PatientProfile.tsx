@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import PatientInfo from "../components/PatientInfo";
 import { useParams } from "react-router-dom";
-import { GetPatientDetails } from "../service/patient";
+import { GetPatientDetails } from "../services/patient";
 import { PatientData } from "../components/PatientForm";
 import UpdatePatientButton from "../components/UpdatePatientButton";
 import DeletePatientButton from "../components/DeletePatientButton";

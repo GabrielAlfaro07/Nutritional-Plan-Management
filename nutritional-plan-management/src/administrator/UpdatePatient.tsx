@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import PatientForm from "../components/PatientForm";
 import { PatientData } from "../components/PatientForm";
-import { UpdatePatient } from "../service/patient";
+import { UpdatePatient } from "../services/patient";
 import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
-import { GetPatientDetails } from "../service/patient";
+import { GetPatientDetails } from "../services/patient";
 
 const UpdatePatientPage = () => {
   const { patientId } = useParams<{ patientId: string }>();

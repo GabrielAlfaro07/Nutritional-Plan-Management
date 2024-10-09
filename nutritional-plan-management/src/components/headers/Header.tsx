@@ -17,7 +17,13 @@ const Header: React.FC = () => {
 
       {/* App Name (Centered) */}
       <div className="flex-1 text-center absolute inset-x-0">
-        <h1 className="text-lg text-white">
+        <h1
+          className="text-2xl text-white"
+          style={{
+            fontFamily: "Designer, Comfortaa",
+            textTransform: "uppercase", // Ensure the title is all caps
+          }}
+        >
           Nutritional Plan Management System
         </h1>
       </div>
