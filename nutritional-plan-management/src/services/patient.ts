@@ -1,4 +1,3 @@
-import { PatientData } from "../components/PatientForm";
 import { db } from "../../firebaseConfig";
 import {
   collection,
@@ -10,56 +9,53 @@ import {
   deleteDoc,
 } from "firebase/firestore";
 
-// Función para generar una contraseña basada en apellido y mes de nacimiento
-const generatePassword = (
-  lastname1: string,
-  lastname2: string,
-  birthdate: string
-): string => {
-  // Asegurarse de que el apellido tenga al menos 2 letras
-  const lastname1Part = lastname1.substring(0, 2).toLowerCase(); // Tomar las primeras dos letras del apellido
-  const lastname2Part = lastname2.substring(0, 2).toLowerCase();
+export interface PatientData {
+  name: string;
+  lastname: string; // Only one last name
+  birthdate: string;
+  startDate: string;
+  goal: string;
+  email: string;
+  phoneNumber: string;
+  password: string;
+  nextAppointment: string;
+}
 
-  const fechaNacimiento = new Date(birthdate);
-  const mes = (fechaNacimiento.getMonth() + 1).toString().padStart(2, "0"); // Obtener el mes (añadir 1 porque getMonth() devuelve 0-11)
-
-  // Concatenar la parte del apellido con el mes
-  const password = lastname1Part + lastname2Part + mes;
-
-  return password;
+// Updated password generation without lastname2
+const generatePassword = (lastname: string, birthdate: string): string => {
+  const lastnamePart = lastname.substring(0, 4).toLowerCase();
+  const birthdateObj = new Date(birthdate);
+  const month = (birthdateObj.getMonth() + 1).toString().padStart(2, "0");
+  return lastnamePart + month;
 };
 
-// Create a new patient
+// Create a new patient (with one last name)
 export const addPatient = async (
   name: string,
-  lastname1: string,
-  lastname2: string,
-  age: number,
+  lastname: string,
   birthdate: string,
-  startdate: string,
+  startDate: string,
   goal: string,
-  mail: string,
-  phoneNumber: string
+  email: string,
+  phoneNumber: string,
+  nextAppointment: string
 ) => {
   try {
-    const Gpassword = generatePassword(lastname1, lastname2, birthdate);
+    const generatedPassword = generatePassword(lastname, birthdate);
 
     const docRef = await addDoc(collection(db, "patients"), {
       name,
-      lastname1,
-      lastname2,
-      age,
+      lastname,
       birthdate,
-      startdate,
+      startDate,
       goal,
-      mail,
+      email,
       phoneNumber,
-      password: Gpassword,
+      password: generatedPassword,
+      nextAppointment,
     });
 
     const patientId = docRef.id;
-
-    alert(`Patient successfully created your password is: ${patientId}`);
     return patientId;
   } catch (error) {
     console.error("Error creating patient: ", error);
@@ -67,8 +63,8 @@ export const addPatient = async (
   }
 };
 
-//Info patient
-export const GetPatientDetails = async (patientId: string) => {
+// Fetch patient details
+export const getPatientDetails = async (patientId: string) => {
   try {
     const patientRef = doc(db, "patients", patientId);
     const patientSnapshot = await getDoc(patientRef);
@@ -86,15 +82,15 @@ export const GetPatientDetails = async (patientId: string) => {
   }
 };
 
-//Change Password
-export const ChangePassword = async (
+// Change Password
+export const changePassword = async (
   patientId: string,
   newPassword: string
 ) => {
   try {
     const patientRef = doc(db, "patients", patientId);
     await updateDoc(patientRef, {
-      password: newPassword, // Actualizar solo la contraseña
+      password: newPassword,
     });
     console.log("Password successfully updated");
   } catch (error) {
@@ -118,7 +114,6 @@ export const deletePatient = async (patientId: string) => {
 export const getPatients = async () => {
   try {
     const patientsCollectionRef = collection(db, "patients");
-
     const patientsSnapshot = await getDocs(patientsCollectionRef);
 
     const patientsList = patientsSnapshot.docs.map((patientDoc) => ({
@@ -126,7 +121,7 @@ export const getPatients = async () => {
       data: patientDoc.data() as PatientData,
     }));
 
-    console.log("Patients list:", patientsList); // Verificar la lista antes de devolver
+    console.log("Patients list:", patientsList);
     return patientsList;
   } catch (error) {
     console.error("Error fetching patients: ", error);
@@ -134,26 +129,33 @@ export const getPatients = async () => {
   }
 };
 
-//Update age, telefono, email, objetivo
-
-export const UpdatePatient = async (
+// Edit patient data (all fields)
+export const editPatient = async (
   patientId: string,
-  newcellphonenumber: string,
-  newage: number,
-  newmail: string,
-  newgoal: string
+  name: string,
+  lastname: string,
+  birthdate: string,
+  startDate: string,
+  goal: string,
+  email: string,
+  phoneNumber: string,
+  nextAppointment: string
 ) => {
   try {
     const patientRef = doc(db, "patients", patientId);
     await updateDoc(patientRef, {
-      phoneNumber: newcellphonenumber,
-      goal: newgoal,
-      mail: newmail,
-      age: newage,
+      name,
+      lastname,
+      birthdate,
+      startDate,
+      goal,
+      email,
+      phoneNumber,
+      nextAppointment,
     });
-    console.log("Info successfully updated");
+    console.log("Patient successfully updated");
   } catch (error) {
-    console.error("Error updating info: ", error);
-    throw new Error("Failed to update info.");
+    console.error("Error updating patient:", error);
+    throw new Error("Failed to update patient.");
   }
 };
