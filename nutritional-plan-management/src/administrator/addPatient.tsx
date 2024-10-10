@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import PatientForm from "../components/PatientForm";
 import { PatientData } from "../components/PatientForm";
 import { addPatient } from "../services/patient";
@@ -15,9 +15,9 @@ const AddPatient = () => {
         data.lastname2,
         data.age,
         data.birthdate,
-        data.startdate,
+        data.startDate,
         data.goal,
-        data.mail,
+        data.email,
         data.phoneNumber
       );
 
@@ -35,9 +35,9 @@ const AddPatient = () => {
     lastname2: "",
     age: 0,
     birthdate: "",
-    startdate: "",
+    startDate: "",
     goal: "",
-    mail: "",
+    email: "",
     phoneNumber: "",
     password: "",
   });
@@ -54,9 +54,9 @@ const AddPatient = () => {
           "lastname1",
           "lastname2",
           "age",
-          "mail",
+          "email",
           "birthdate",
-          "startdate",
+          "startDate",
           "phoneNumber",
           "goal",
         ]}

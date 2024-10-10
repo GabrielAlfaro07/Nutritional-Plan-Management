@@ -119,12 +119,12 @@ const PatientForm: React.FC<PatientFormProps> = ({
         <input
           className="w-full p-2 border border-gray-300 rounded-lg"
           type="date"
-          name="startdate"
+          name="startDate"
           value={formData?.startDate || ""} // Valor predeterminado si formData es null
           onChange={(e) =>
             formData && setFormData({ ...formData, startDate: e.target.value })
           }
-          readOnly={!isEditable("startdate")}
+          readOnly={!isEditable("startDate")}
         />
       </div>
       <div className="mb-4">

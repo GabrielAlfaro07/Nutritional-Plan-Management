@@ -34,7 +34,7 @@ const UpdatePatientPage = () => {
           patientId,
           data.phoneNumber,
           data.age,
-          data.mail,
+          data.email,
           data.goal
         );
 
@@ -67,7 +67,7 @@ const UpdatePatientPage = () => {
         formData={patientData}
         setFormData={setPatientData}
         savePatientData={savePatientData}
-        editableFields={["age", "mail", "phoneNumber", "goal"]}
+        editableFields={["age", "email", "phoneNumber", "goal"]}
       />
     </div>
   );
