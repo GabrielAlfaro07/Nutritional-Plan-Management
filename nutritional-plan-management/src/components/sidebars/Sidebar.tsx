@@ -10,7 +10,7 @@ interface SidebarProps {
 const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
   return (
     <div
-      className={`fixed top-16 left-0 w-64 bg-gray-800 h-full z-50 transform ${
+      className={`fixed top-16 left-0 w-64 bg-gray-800 border-r border-gray-600 h-full z-50 transform ${
         isOpen ? "translate-x-0" : "-translate-x-full"
       } transition-transform duration-300 ease-in-out`}
     >

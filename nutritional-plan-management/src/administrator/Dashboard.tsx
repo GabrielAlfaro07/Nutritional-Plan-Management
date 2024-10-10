@@ -17,7 +17,7 @@ const Dashboard = () => {
       {/* Main Content */}
       <div className="relative flex flex-col items-center justify-start px-4 lg:px-0">
         {/* Content Container */}
-        <div className="w-full max-w-4xl mt-60">
+        <div className="w-full max-w-4xl mt-40">
           {/* Titles */}
           <h1
             style={{

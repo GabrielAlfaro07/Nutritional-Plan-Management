@@ -12,7 +12,7 @@ const PatientInfo: React.FC<PatientInfoProps> = ({ patient }) => {
         {patient.name} {patient.lastname1} {patient.lastname2}
       </h2>
       <p className="text-gray-600 mb-2">
-        <strong>Email:</strong> {patient.mail}
+        <strong>Email:</strong> {patient.email}
       </p>
       <p className="text-gray-600 mb-2">
         <strong>Teléfono:</strong> {patient.phoneNumber}
@@ -27,7 +27,7 @@ const PatientInfo: React.FC<PatientInfoProps> = ({ patient }) => {
         <strong>Objetivo:</strong> {patient.goal}
       </p>
       <p className="text-gray-600 mb-2">
-        <strong>Fecha de Inicio:</strong> {patient.startdate}
+        <strong>Fecha de Inicio:</strong> {patient.startDate}
       </p>
       <p className="text-gray-600 mb-2">
         <strong>Contraseña:</strong> {patient.password}

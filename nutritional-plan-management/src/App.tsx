@@ -1,14 +1,28 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Home from "./administrator/HomeScreen";
+import { onAuthStateChanged } from "firebase/auth"; // Import this
+import { auth } from "../firebaseConfig"; // Import auth
 import AddPatient from "./administrator/addPatient";
 import PatientProfile from "./administrator/PatientProfile";
+import PatientsListPrevious from "./administrator/PatientsListPrevious";
 import PatientsList from "./administrator/PatientsList";
 import UpdatePatient from "./administrator/UpdatePatient";
 import Header from "./components/headers/Header";
 import Dashboard from "./administrator/Dashboard";
 
 const App: React.FC = () => {
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        console.log("User logged in:", user);
+      } else {
+        console.log("No user logged in.");
+      }
+    });
+
+    return () => unsubscribe(); // Clean up the subscription
+  }, []);
+
   return (
     <Router>
       <div>

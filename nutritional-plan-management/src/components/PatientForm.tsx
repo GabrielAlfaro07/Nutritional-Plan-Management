@@ -6,9 +6,9 @@ export interface PatientData {
   lastname2: string;
   age: number;
   birthdate: string;
-  startdate: string;
+  startDate: string;
   goal: string;
-  mail: string;
+  email: string;
   phoneNumber: string;
   password: string;
 }
@@ -120,9 +120,9 @@ const PatientForm: React.FC<PatientFormProps> = ({
           className="w-full p-2 border border-gray-300 rounded-lg"
           type="date"
           name="startdate"
-          value={formData?.startdate || ""} // Valor predeterminado si formData es null
+          value={formData?.startDate || ""} // Valor predeterminado si formData es null
           onChange={(e) =>
-            formData && setFormData({ ...formData, startdate: e.target.value })
+            formData && setFormData({ ...formData, startDate: e.target.value })
           }
           readOnly={!isEditable("startdate")}
         />
@@ -144,7 +144,7 @@ const PatientForm: React.FC<PatientFormProps> = ({
           className="w-full p-2 border border-gray-300 rounded-lg"
           type="email"
           name="mail"
-          value={formData?.mail || ""} // Valor predeterminado si formData es null
+          value={formData?.email || ""} // Valor predeterminado si formData es null
           onChange={handleChange}
           readOnly={!isEditable("mail")}
         />

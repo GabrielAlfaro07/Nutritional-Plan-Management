@@ -36,9 +36,9 @@ export const addPatient = async (
   lastname2: string,
   age: number,
   birthdate: string,
-  startdate: string,
+  startDate: string,
   goal: string,
-  mail: string,
+  email: string,
   phoneNumber: string
 ) => {
   try {
@@ -50,9 +50,9 @@ export const addPatient = async (
       lastname2,
       age,
       birthdate,
-      startdate,
+      startDate,
       goal,
-      mail,
+      email,
       phoneNumber,
       password: Gpassword,
     });

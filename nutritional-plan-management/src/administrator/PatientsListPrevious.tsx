@@ -4,7 +4,7 @@ import { getPatients } from "../services/patient";
 import List from "../components/lists/List";
 import SearchBar from "../components/searchbars/SearchBar";
 
-const PatientsList = () => {
+const PatientsListPrevious = () => {
   const [patients, setPatients] = useState<Patients[]>([]); // Store the list of patients
   const [filteredPatients, setFilteredPatients] = useState<Patients[]>([]); // Store the filtered list of patients
   const [searchTerm, setSearchTerm] = useState<string>(""); // Search term for filtering
@@ -35,31 +35,13 @@ const PatientsList = () => {
   }, []);
 
   return (
-    <div className="relative flex flex-col items-center justify-start px-4 lg:px-0">
-      {/* Content Container */}
-      <div className="w-full max-w-4xl mt-20">
-        {/* Flex container for title and search bar */}
-        <div className="flex justify-between items-center mb-6">
-          {/* Title */}
-          <h1
-            className="text-5xl font-semibold text-gray-800"
-            style={{
-              fontFamily: "Designer, Comfortaa",
-              textTransform: "uppercase", // Ensure the text is all caps
-            }}
-          >
-            Your Patients
-          </h1>
-
-          {/* Search Bar */}
-          <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
-        </div>
-
-        {/* List of Patients */}
-        <List patients={filteredPatients} />
-      </div>
+    <div>
+      <h1>Pacientes</h1>
+      <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+      <List patients={filteredPatients} />{" "}
+      {/* Pass the filtered list to List */}
     </div>
   );
 };
 
-export default PatientsList;
+export default PatientsListPrevious;

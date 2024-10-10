@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import SidebarButton from "../buttons/SidebarButton";
-import LogoutButton from "../LogoutButton";
 import Sidebar from "../sidebars/Sidebar";
+import AuthButtons from "../buttons/AuthButtons";
 
 const Header: React.FC = () => {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
@@ -32,8 +32,8 @@ const Header: React.FC = () => {
         </div>
 
         {/* Logout Button (Right-aligned) */}
-        <div className="absolute right-4">
-          <LogoutButton />
+        <div className="absolute right-4 z-10">
+          <AuthButtons />
         </div>
       </header>
 
