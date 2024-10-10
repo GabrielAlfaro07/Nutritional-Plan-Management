@@ -18,10 +18,10 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
         <SidebarLink to="/" onClick={onClose}>
           Dashboard
         </SidebarLink>
-        <SidebarLink to="/PatientsList" onClick={onClose}>
+        <SidebarLink to="/patientsList" onClick={onClose}>
           Patients
         </SidebarLink>
-        <SidebarLink to="/FoodExchanges" onClick={onClose}>
+        <SidebarLink to="/foodExchanges" onClick={onClose}>
           Food Exchanges
         </SidebarLink>
       </nav>

@@ -2,13 +2,14 @@ import React, { useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { onAuthStateChanged } from "firebase/auth"; // Import this
 import { auth } from "../firebaseConfig"; // Import auth
-import AddPatient from "./administrator/addPatient";
 import PatientProfile from "./administrator/PatientProfile";
 import PatientsListScreen from "./administrator/PatientsListScreen";
 import UpdatePatient from "./administrator/UpdatePatient";
 import Header from "./components/headers/Header";
 import Dashboard from "./administrator/Dashboard";
 import AddPatientScreen from "./administrator/AddPatientScreen";
+import EditPatientScreen from "./administrator/EditPatientScreen";
+import PatientDetailsScreen from "./administrator/PatientDetailsScreen";
 
 const App: React.FC = () => {
   useEffect(() => {
@@ -30,18 +31,18 @@ const App: React.FC = () => {
         <div className="mt-16">
           <Routes>
             <Route path="/" element={<Dashboard />} />
-            <Route path="/AddPatient" element={<AddPatientScreen />} />
+            <Route path="/addPatient" element={<AddPatientScreen />} />
             <Route
-              path="/PatientProfile/:patientId"
-              element={<PatientProfile />}
+              path="/patientDetails/:patientId"
+              element={<PatientDetailsScreen />}
             />
-            <Route path="/PatientsList" element={<PatientsListScreen />} />
+            <Route path="/patientsList" element={<PatientsListScreen />} />
             <Route
-              path="/UpdatePatient/:patientId"
-              element={<UpdatePatient />}
+              path="/editPatient/:patientId"
+              element={<EditPatientScreen />}
             />
             <Route
-              path="/FoodExchanges"
+              path="/foodExchanges"
               element={<div>Food Exchanges Content</div>}
             />
           </Routes>

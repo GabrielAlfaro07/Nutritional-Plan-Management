@@ -6,7 +6,7 @@ const AddNewPatientButton: React.FC = () => {
 
   const handleAddPatient = () => {
     console.log("Add a patient");
-    navigate("/AddPatient"); // Navigate to AddPatient screen
+    navigate("/addPatient"); // Navigate to AddPatient screen
   };
 
   return (

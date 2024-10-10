@@ -20,7 +20,7 @@ const List: React.FC<{ patients: Patients[] }> = ({ patients }) => {
 
   const handlePatientClick = (id: string) => {
     // Navigate to the patient's profile using the id
-    navigate(`/PatientProfile/${id}`);
+    navigate(`/patientDetails/${id}`);
   };
 
   // Define the headers and their respective icons

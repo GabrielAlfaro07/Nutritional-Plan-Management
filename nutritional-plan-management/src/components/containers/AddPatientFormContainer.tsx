@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import PatientForm from "../forms/PatientForm";
+import AddPatientForm from "../forms/AddPatientForm";
 import { PatientData } from "../../services/patient";
 import { addPatient } from "../../services/patient";
 import { useNavigate } from "react-router-dom";
 
-const PatientFormContainer: React.FC = () => {
+const AddPatientFormContainer: React.FC = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState<PatientData>({
     name: "",
@@ -31,7 +31,7 @@ const PatientFormContainer: React.FC = () => {
         data.nextAppointment
       );
       alert("Patient successfully created!");
-      navigate(`/PatientProfile/${patientId}`);
+      navigate(`/patientDetails/${patientId}`);
     } catch (error) {
       console.error("Error creating patient:", error);
       alert("Failed to create patient.");
@@ -39,7 +39,7 @@ const PatientFormContainer: React.FC = () => {
   };
 
   return (
-    <PatientForm
+    <AddPatientForm
       formData={formData}
       setFormData={setFormData}
       savePatientData={savePatientData}
@@ -57,4 +57,4 @@ const PatientFormContainer: React.FC = () => {
   );
 };
 
-export default PatientFormContainer;
+export default AddPatientFormContainer;

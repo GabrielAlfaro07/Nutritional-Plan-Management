@@ -1,7 +1,7 @@
 import React from "react";
-import AddPatientFormContainer from "../components/containers/AddPatientFormContainer";
+import EditPatientFormContainer from "../components/containers/EditPatientFormContainer";
 
-const AddPatientScreen: React.FC = () => {
+const EditPatientScreen: React.FC = () => {
   return (
     <div className="relative flex flex-col items-center justify-start px-4 lg:px-0">
       {/* Content Container */}
@@ -14,14 +14,14 @@ const AddPatientScreen: React.FC = () => {
             textTransform: "uppercase",
           }}
         >
-          Add a Patient
+          Edit Patient
         </h1>
 
         {/* Patient Form */}
-        <AddPatientFormContainer />
+        <EditPatientFormContainer />
       </div>
     </div>
   );
 };
 
-export default AddPatientScreen;
+export default EditPatientScreen;
