@@ -2,9 +2,7 @@ import React, { useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { onAuthStateChanged } from "firebase/auth"; // Import this
 import { auth } from "../firebaseConfig"; // Import auth
-import PatientProfile from "./administrator/PatientProfile";
 import PatientsListScreen from "./administrator/PatientsListScreen";
-import UpdatePatient from "./administrator/UpdatePatient";
 import Header from "./components/headers/Header";
 import Dashboard from "./administrator/Dashboard";
 import AddPatientScreen from "./administrator/AddPatientScreen";
