@@ -1,6 +1,53 @@
+import { useEffect, useState } from "react";
 import Panel from "../components/panels/Panel";
+import {
+  getTotalPatients,
+  getPatientsWithUpcomingAppointments,
+} from "../services/patientService";
+import { getAuth, onAuthStateChanged } from "firebase/auth"; // Firebase auth for login detection
 
 const Dashboard = () => {
+  const [totalPatients, setTotalPatients] = useState<string | number>("-");
+  const [upcomingAppointments, setUpcomingAppointments] = useState<
+    string | number
+  >("-");
+  const [isLoggedIn, setIsLoggedIn] = useState(false); // Track login status
+
+  useEffect(() => {
+    const auth = getAuth();
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        // If user is logged in, set login status to true
+        setIsLoggedIn(true);
+      } else {
+        setIsLoggedIn(false);
+      }
+    });
+
+    return () => unsubscribe(); // Cleanup the listener
+  }, []);
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      const fetchDashboardData = async () => {
+        try {
+          // Fetch total patients count
+          const totalPatientsCount = await getTotalPatients();
+          setTotalPatients(totalPatientsCount);
+
+          // Fetch patients with upcoming appointments
+          const patientsWithAppointments =
+            await getPatientsWithUpcomingAppointments();
+          setUpcomingAppointments(patientsWithAppointments);
+        } catch (error) {
+          console.error("Error fetching dashboard data: ", error);
+        }
+      };
+
+      fetchDashboardData(); // Fetch data after login
+    }
+  }, [isLoggedIn]); // Re-fetch data when login status changes
+
   return (
     <div className="relative">
       {/* Background Image */}
@@ -22,7 +69,7 @@ const Dashboard = () => {
           <h1
             style={{
               fontFamily: "Designer, Comfortaa",
-              textTransform: "uppercase", // Ensure the text is all caps
+              textTransform: "uppercase",
             }}
             className="text-6xl font-semibold text-gray-800 mb-6 text-left"
           >
@@ -37,9 +84,12 @@ const Dashboard = () => {
 
           {/* Responsive Panels */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <Panel title="Panel 1" content="Panel 1 information" />
-            <Panel title="Panel 2" content="Panel 2 information" />
-            <Panel title="Panel 3" content="Panel 3 information" />
+            <Panel title={totalPatients} content="Total patients" />{" "}
+            <Panel title="-" content="Active plans" />
+            <Panel
+              title={upcomingAppointments}
+              content="Upcoming appointments"
+            />{" "}
           </div>
         </div>
       </div>

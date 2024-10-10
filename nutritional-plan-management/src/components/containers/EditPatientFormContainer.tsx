@@ -4,7 +4,7 @@ import {
   PatientData,
   getPatientDetails,
   editPatient,
-} from "../../services/patient";
+} from "../../services/patientService";
 import { useNavigate, useParams } from "react-router-dom";
 
 const EditPatientFormContainer: React.FC = () => {

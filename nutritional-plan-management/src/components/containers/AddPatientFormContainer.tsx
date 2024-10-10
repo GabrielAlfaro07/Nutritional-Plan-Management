@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import AddPatientForm from "../forms/AddPatientForm";
-import { PatientData } from "../../services/patient";
-import { addPatient } from "../../services/patient";
+import { PatientData } from "../../services/patientService";
+import { addPatient } from "../../services/patientService";
 import { useNavigate } from "react-router-dom";
 
 const AddPatientFormContainer: React.FC = () => {

@@ -3,7 +3,7 @@ import React from "react";
 import PatientForm from "./PatientForm";
 import AddPatientButton from "../buttons/AddPatientButton";
 import CancelButton from "../buttons/CancelButton";
-import { PatientData } from "../../services/patient";
+import { PatientData } from "../../services/patientService";
 
 interface AddPatientFormProps {
   formData: PatientData;

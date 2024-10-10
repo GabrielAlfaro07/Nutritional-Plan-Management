@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Patients } from "../components/lists/List";
-import { getPatients } from "../services/patient";
+import { getPatients } from "../services/patientService";
 import List from "../components/lists/List";
 import SearchBar from "../components/searchbars/SearchBar";
 import AddPatientButton from "../components/buttons/AddNewPatientButton";

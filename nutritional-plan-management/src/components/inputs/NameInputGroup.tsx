@@ -1,6 +1,6 @@
 import React from "react";
 import TextInput from "./TextInput";
-import { PatientData } from "../../services/patient";
+import { PatientData } from "../../services/patientService";
 
 const NameInputGroup: React.FC<{
   formData: PatientData;
