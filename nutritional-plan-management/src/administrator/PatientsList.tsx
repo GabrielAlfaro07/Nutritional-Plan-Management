@@ -3,6 +3,7 @@ import { Patients } from "../components/lists/List";
 import { getPatients } from "../services/patient";
 import List from "../components/lists/List";
 import SearchBar from "../components/searchbars/SearchBar";
+import AddPatientButton from "../components/buttons/AddPatientButton";
 
 const PatientsList = () => {
   const [patients, setPatients] = useState<Patients[]>([]); // Store the list of patients
@@ -57,6 +58,11 @@ const PatientsList = () => {
 
         {/* List of Patients */}
         <List patients={filteredPatients} />
+
+        {/* Button container at the bottom right */}
+        <div className="flex justify-end mt-4">
+          <AddPatientButton /> {/* Add patient button */}
+        </div>
       </div>
     </div>
   );

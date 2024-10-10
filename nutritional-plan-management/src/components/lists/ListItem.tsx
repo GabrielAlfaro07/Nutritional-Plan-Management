@@ -7,7 +7,7 @@ const ListItem: React.FC<{
 }> = ({ patient, onClick }) => {
   return (
     <li
-      className="cursor-pointer py-3 px-4 hover:bg-gray-100 border-b border-x rounded-full border-gray-200"
+      className="cursor-pointer py-3 px-6 hover:bg-gray-100 border-b border-x rounded-full border-gray-200"
       onClick={() => onClick(patient.id)}
     >
       <div
@@ -19,8 +19,13 @@ const ListItem: React.FC<{
           {`${patient.data.name} ${patient.data.lastname1} ${patient.data.lastname2}`}
         </div>
 
-        {/* Email */}
-        <div className="col-span-1">{patient.data.email}</div>
+        {/* Email with truncation */}
+        <div
+          className="col-span-1 overflow-hidden whitespace-nowrap text-ellipsis"
+          style={{ textOverflow: "ellipsis" }}
+        >
+          {patient.data.email}
+        </div>
 
         {/* Start Date */}
         <div className="col-span-1">{patient.data.startDate}</div>
