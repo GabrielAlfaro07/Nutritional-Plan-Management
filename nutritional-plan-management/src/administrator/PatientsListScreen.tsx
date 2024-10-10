@@ -3,9 +3,9 @@ import { Patients } from "../components/lists/List";
 import { getPatients } from "../services/patient";
 import List from "../components/lists/List";
 import SearchBar from "../components/searchbars/SearchBar";
-import AddPatientButton from "../components/buttons/AddPatientButton";
+import AddPatientButton from "../components/buttons/AddNewPatientButton";
 
-const PatientsList = () => {
+const PatientsListScreen = () => {
   const [patients, setPatients] = useState<Patients[]>([]); // Store the list of patients
   const [filteredPatients, setFilteredPatients] = useState<Patients[]>([]); // Store the filtered list of patients
   const [searchTerm, setSearchTerm] = useState<string>(""); // Search term for filtering
@@ -68,4 +68,4 @@ const PatientsList = () => {
   );
 };
 
-export default PatientsList;
+export default PatientsListScreen;

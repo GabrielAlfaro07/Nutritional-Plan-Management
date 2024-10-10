@@ -16,7 +16,7 @@ const ListItem: React.FC<{
       >
         {/* Full name */}
         <div className="col-span-1">
-          {`${patient.data.name} ${patient.data.lastname1} ${patient.data.lastname2}`}
+          {`${patient.data.name} ${patient.data.lastname}`}
         </div>
 
         {/* Email with truncation */}

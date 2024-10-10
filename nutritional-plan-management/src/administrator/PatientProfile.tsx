@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import PatientInfo from "../components/PatientInfo";
 import { useParams } from "react-router-dom";
 import { GetPatientDetails } from "../services/patient";
-import { PatientData } from "../components/PatientForm";
+import { PatientData } from "../services/patient";
 import UpdatePatientButton from "../components/UpdatePatientButton";
 import DeletePatientButton from "../components/DeletePatientButton";
 

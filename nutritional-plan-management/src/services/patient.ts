@@ -1,4 +1,3 @@
-import { PatientData } from "../components/PatientForm";
 import { db } from "../../firebaseConfig";
 import {
   collection,
@@ -10,56 +9,53 @@ import {
   deleteDoc,
 } from "firebase/firestore";
 
-// Función para generar una contraseña basada en apellido y mes de nacimiento
-const generatePassword = (
-  lastname1: string,
-  lastname2: string,
-  birthdate: string
-): string => {
-  // Asegurarse de que el apellido tenga al menos 2 letras
-  const lastname1Part = lastname1.substring(0, 2).toLowerCase(); // Tomar las primeras dos letras del apellido
-  const lastname2Part = lastname2.substring(0, 2).toLowerCase();
+export interface PatientData {
+  name: string;
+  lastname: string; // Only one last name
+  birthdate: string;
+  startDate: string;
+  goal: string;
+  email: string;
+  phoneNumber: string;
+  password: string;
+  nextAppointment: string;
+}
 
+// Updated password generation without lastname2
+const generatePassword = (lastname1: string, birthdate: string): string => {
+  const lastname1Part = lastname1.substring(0, 4).toLowerCase();
   const fechaNacimiento = new Date(birthdate);
-  const mes = (fechaNacimiento.getMonth() + 1).toString().padStart(2, "0"); // Obtener el mes (añadir 1 porque getMonth() devuelve 0-11)
-
-  // Concatenar la parte del apellido con el mes
-  const password = lastname1Part + lastname2Part + mes;
-
-  return password;
+  const mes = (fechaNacimiento.getMonth() + 1).toString().padStart(2, "0");
+  return lastname1Part + mes;
 };
 
-// Create a new patient
+// Create a new patient (with one last name)
 export const addPatient = async (
   name: string,
-  lastname1: string,
-  lastname2: string,
-  age: number,
+  lastname: string,
   birthdate: string,
   startDate: string,
   goal: string,
   email: string,
-  phoneNumber: string
+  phoneNumber: string,
+  nextAppointment: string
 ) => {
   try {
-    const Gpassword = generatePassword(lastname1, lastname2, birthdate);
+    const Gpassword = generatePassword(lastname, birthdate);
 
     const docRef = await addDoc(collection(db, "patients"), {
       name,
-      lastname1,
-      lastname2,
-      age,
+      lastname,
       birthdate,
       startDate,
       goal,
       email,
       phoneNumber,
       password: Gpassword,
+      nextAppointment,
     });
 
     const patientId = docRef.id;
-
-    alert(`Patient successfully created your password is: ${patientId}`);
     return patientId;
   } catch (error) {
     console.error("Error creating patient: ", error);
@@ -139,7 +135,6 @@ export const getPatients = async () => {
 export const UpdatePatient = async (
   patientId: string,
   newcellphonenumber: string,
-  newage: number,
   newmail: string,
   newgoal: string
 ) => {
@@ -148,8 +143,7 @@ export const UpdatePatient = async (
     await updateDoc(patientRef, {
       phoneNumber: newcellphonenumber,
       goal: newgoal,
-      mail: newmail,
-      age: newage,
+      email: newmail,
     });
     console.log("Info successfully updated");
   } catch (error) {

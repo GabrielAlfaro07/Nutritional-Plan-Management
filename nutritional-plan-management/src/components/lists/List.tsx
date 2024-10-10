@@ -8,7 +8,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import ListHeader from "../headers/ListHeader";
 import ListItem from "./ListItem";
-import { PatientData } from "../PatientForm";
+import { PatientData } from "../../services/patient";
 
 export interface Patients {
   id: string;
@@ -36,8 +36,8 @@ const List: React.FC<{ patients: Patients[] }> = ({ patients }) => {
       {/* Render the header */}
       <ListHeader headers={headers} />
 
-      {/* Render the list of patients */}
-      <ul>
+      {/* Scrollable patient list with a max height */}
+      <ul className="max-h-96 overflow-y-auto">
         {patients.map((patient) => (
           <ListItem
             key={patient.id}

@@ -4,11 +4,11 @@ import { onAuthStateChanged } from "firebase/auth"; // Import this
 import { auth } from "../firebaseConfig"; // Import auth
 import AddPatient from "./administrator/addPatient";
 import PatientProfile from "./administrator/PatientProfile";
-import PatientsListPrevious from "./administrator/PatientsListPrevious";
-import PatientsList from "./administrator/PatientsList";
+import PatientsListScreen from "./administrator/PatientsListScreen";
 import UpdatePatient from "./administrator/UpdatePatient";
 import Header from "./components/headers/Header";
 import Dashboard from "./administrator/Dashboard";
+import AddPatientScreen from "./administrator/AddPatientScreen";
 
 const App: React.FC = () => {
   useEffect(() => {
@@ -30,12 +30,12 @@ const App: React.FC = () => {
         <div className="mt-16">
           <Routes>
             <Route path="/" element={<Dashboard />} />
-            <Route path="/addPatient" element={<AddPatient />} />
+            <Route path="/AddPatient" element={<AddPatientScreen />} />
             <Route
               path="/PatientProfile/:patientId"
               element={<PatientProfile />}
             />
-            <Route path="/PatientsList" element={<PatientsList />} />
+            <Route path="/PatientsList" element={<PatientsListScreen />} />
             <Route
               path="/UpdatePatient/:patientId"
               element={<UpdatePatient />}

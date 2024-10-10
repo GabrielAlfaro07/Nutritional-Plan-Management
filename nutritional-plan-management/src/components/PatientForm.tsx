@@ -1,17 +1,5 @@
 import React, { useState } from "react";
-
-export interface PatientData {
-  name: string;
-  lastname1: string;
-  lastname2: string;
-  age: number;
-  birthdate: string;
-  startDate: string;
-  goal: string;
-  email: string;
-  phoneNumber: string;
-  password: string;
-}
+import { PatientData } from "../services/patient";
 
 interface PatientFormProps {
   formData: PatientData | null;
@@ -46,7 +34,7 @@ const PatientForm: React.FC<PatientFormProps> = ({
 
   return (
     <form
-      className="text-center p-10 bg-white bg-opacity-80 rounded-lg shadow-lg"
+      className="text-center bg-white bg-opacity-80"
       onSubmit={handleSubmit}
     >
       <div className="mb-4">
@@ -68,7 +56,7 @@ const PatientForm: React.FC<PatientFormProps> = ({
           className="w-full p-2 border border-gray-300 rounded-lg"
           type="text"
           name="lastname1"
-          value={formData?.lastname1 || ""} // Valor predeterminado si formData es null
+          value={formData?.lastname || ""} // Valor predeterminado si formData es null
           onChange={handleChange}
           readOnly={!isEditable("lastname1")}
         />
@@ -81,20 +69,9 @@ const PatientForm: React.FC<PatientFormProps> = ({
           className="w-full p-2 border border-gray-300 rounded-lg"
           type="text"
           name="lastname2"
-          value={formData?.lastname2 || ""} // Valor predeterminado si formData es null
+          value={formData?.lastname || ""} // Valor predeterminado si formData es null
           onChange={handleChange}
           readOnly={!isEditable("lastname2")}
-        />
-      </div>
-      <div className="mb-4">
-        <label className="block text-gray-700 font-bold mb-2">Edad:</label>
-        <input
-          className="w-full p-2 border border-gray-300 rounded-lg"
-          type="number"
-          name="age"
-          value={formData?.age || 0} // Valor predeterminado si formData es null
-          onChange={handleChange}
-          readOnly={!isEditable("age")}
         />
       </div>
       <div className="mb-4">

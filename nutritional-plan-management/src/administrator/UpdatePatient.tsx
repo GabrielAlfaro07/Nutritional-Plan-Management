@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import PatientForm from "../components/PatientForm";
-import { PatientData } from "../components/PatientForm";
+import { PatientData } from "../services/patient";
 import { UpdatePatient } from "../services/patient";
 import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
@@ -30,13 +30,7 @@ const UpdatePatientPage = () => {
   const savePatientData = async (data: PatientData) => {
     try {
       if (patientId) {
-        await UpdatePatient(
-          patientId,
-          data.phoneNumber,
-          data.age,
-          data.email,
-          data.goal
-        );
+        await UpdatePatient(patientId, data.phoneNumber, data.email, data.goal);
 
         alert("Patient successfully updated!");
         navigate(`/PatientProfile/${patientId}`); // Redirigir a la página de perfil con el ID
