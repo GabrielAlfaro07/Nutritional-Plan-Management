@@ -4,7 +4,7 @@ import NameInputGroup from "../inputs/NameInputGroup";
 import DateInputGroup from "../inputs/DateInputGroup";
 import ContactInputGroup from "../inputs/ContactInputGroup";
 import GoalInputGroup from "../inputs/GoalInputGroup";
-import { PatientData } from "../../services/patient";
+import { PatientData } from "../../services/patientService";
 
 interface PatientFormProps {
   formData: PatientData;

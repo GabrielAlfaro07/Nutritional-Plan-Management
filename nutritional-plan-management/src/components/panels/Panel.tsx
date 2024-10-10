@@ -1,7 +1,7 @@
 import React from "react";
 
 interface PanelProps {
-  title: string;
+  title: string | number;
   content: string;
 }
 

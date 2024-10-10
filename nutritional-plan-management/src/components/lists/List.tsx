@@ -8,7 +8,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import ListHeader from "../headers/ListHeader";
 import ListItem from "./ListItem";
-import { PatientData } from "../../services/patient";
+import { PatientData } from "../../services/patientService";
 
 export interface Patients {
   id: string;

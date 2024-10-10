@@ -1,5 +1,5 @@
 import DetailsItem from "./DetailsItem";
-import { PatientData } from "../../services/patient";
+import { PatientData } from "../../services/patientService";
 
 interface PatientDetailsSectionProps {
   patientData: PatientData;

@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { getPatientDetails, PatientData } from "../services/patient";
+import { getPatientDetails, PatientData } from "../services/patientService";
 import PatientDetailsSection from "../components/details/PatientDetailsSection";
 import EditCurrentPatientButton from "../components/buttons/EditCurrentPatientButton";
 import DeleteCurrentPatientButton from "../components/buttons/DeleteCurrentPatientButton";
-import CancelButton from "../components/buttons/CancelButton";
+import CancelPatientDetailsButton from "../components/buttons/CancelPatientDetailsButton";
 
 const PatientDetailsScreen = () => {
   const { patientId } = useParams<{ patientId: string }>();
@@ -56,7 +56,7 @@ const PatientDetailsScreen = () => {
 
         {/* Action Buttons */}
         <div className="flex justify-end mt-6 space-x-4">
-          <CancelButton />
+          <CancelPatientDetailsButton />
           <EditCurrentPatientButton />
           <DeleteCurrentPatientButton />
         </div>

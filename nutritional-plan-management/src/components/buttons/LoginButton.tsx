@@ -1,24 +1,15 @@
 import React from "react";
-import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth"; // Import signInWithPopup
+import { useNavigate } from "react-router-dom"; // Import useNavigate hook
+import { loginUserWithGoogle } from "../../services/authService"; // Import the service
 
 const LoginButton: React.FC = () => {
-  const handleLogin = async () => {
-    const auth = getAuth();
-    const provider = new GoogleAuthProvider();
+  const navigate = useNavigate(); // Initialize navigate function
 
-    try {
-      // Use signInWithPopup instead of signInWithRedirect
-      const result = await signInWithPopup(auth, provider);
-      // You can access the user and credential here if needed
-      const user = result.user;
+  const handleLogin = async () => {
+    const user = await loginUserWithGoogle();
+    if (user) {
       console.log("User logged in:", user);
-    } catch (error) {
-      // Type assertion to 'FirebaseError'
-      if (error instanceof Error) {
-        console.error("Error during login:", error.message);
-      } else {
-        console.error("Unexpected error during login:", error);
-      }
+      navigate("/"); // Redirect to the homepage ("/") after login
     }
   };
 
