@@ -9,7 +9,7 @@ interface HeaderItem {
 
 const ListHeader: React.FC<{ headers: HeaderItem[] }> = ({ headers }) => {
   return (
-    <div className="grid grid-cols-4 gap-4 bg-gray-200 py-3 px-4 mb-4 rounded-full text-gray-600 font-extrabold">
+    <div className="grid grid-cols-4 gap-4 bg-darkOrange py-3 px-4 mb-4 rounded-full text-white font-extrabold">
       {headers.map((header, index) => (
         <div
           key={index}

@@ -7,7 +7,7 @@ const ListItem: React.FC<{
 }> = ({ patient, onClick }) => {
   return (
     <li
-      className="cursor-pointer py-3 px-6 hover:bg-gray-100 border-b border-x rounded-full border-gray-200"
+      className="cursor-pointer py-3 px-6 hover:bg-gray-100 transition duration-300 ease-in-out border-b border-x rounded-full border-gray-200"
       onClick={() => onClick(patient.id)}
     >
       <div

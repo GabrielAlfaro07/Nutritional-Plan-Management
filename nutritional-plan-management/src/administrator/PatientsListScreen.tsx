@@ -43,7 +43,7 @@ const PatientsListScreen = () => {
         <div className="flex justify-between items-center mb-6">
           {/* Title */}
           <h1
-            className="text-5xl font-semibold text-gray-800"
+            className="text-5xl font-semibold text-darkBlue"
             style={{
               fontFamily: "Designer, Comfortaa",
               textTransform: "uppercase", // Ensure the text is all caps
