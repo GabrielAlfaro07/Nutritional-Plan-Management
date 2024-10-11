@@ -13,7 +13,7 @@ const Profile: React.FC = () => {
   }
 
   return (
-    <div className="bg-gray-800 text-white p-6 rounded-3xl shadow-lg">
+    <div className="bg-darkBlue text-white p-6 rounded-3xl shadow-lg">
       <div className="flex flex-col items-center space-y-1">
         {/* User Picture or Fallback Icon */}
         {user.photoURL ? (

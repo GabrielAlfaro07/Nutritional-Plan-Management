@@ -27,7 +27,7 @@ const DeleteCurrentPatientButton = () => {
   return (
     <button
       onClick={handleDelete}
-      className={`bg-gray-800 text-base text-white py-2 px-4 rounded-full hover:bg-gray-600 transition duration-300 ease-in-out whitespace-nowrap ${
+      className={`bg-darkOrange hover:bg-lightOrange text-base text-white py-2 px-4 rounded-full transition duration-300 ease-in-out whitespace-nowrap ${
         isDeleting ? "opacity-50 cursor-not-allowed" : ""
       }`}
       disabled={isDeleting} // Disable the button while deleting

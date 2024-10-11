@@ -7,7 +7,7 @@ interface PanelProps {
 
 const Panel: React.FC<PanelProps> = ({ title, content }) => {
   return (
-    <div className="bg-gray-800 rounded-3xl shadow-lg p-8 h-40 md:h-48">
+    <div className="bg-darkOrange rounded-3xl shadow-lg p-8 h-40 md:h-48">
       <h2
         style={{
           fontFamily: "Designer, Comfortaa",
@@ -17,7 +17,7 @@ const Panel: React.FC<PanelProps> = ({ title, content }) => {
       >
         {title}
       </h2>
-      <p style={{ fontFamily: "Comfortaa" }} className="text-2xl text-gray-300">
+      <p style={{ fontFamily: "Comfortaa" }} className="text-2xl text-white">
         {content}
       </p>
     </div>

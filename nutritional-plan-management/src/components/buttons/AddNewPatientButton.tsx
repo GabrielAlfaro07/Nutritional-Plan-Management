@@ -12,7 +12,7 @@ const AddNewPatientButton: React.FC = () => {
   return (
     <button
       onClick={handleAddPatient}
-      className="bg-gray-800 text-base text-white py-2 px-4 rounded-full hover:bg-gray-600 transition duration-300 ease-in-out"
+      className="bg-darkOrange hover:bg-lightOrange text-base text-white py-2 px-4 rounded-full  transition duration-300 ease-in-out"
       style={{ fontFamily: "Comfortaa" }}
     >
       Add Patient
