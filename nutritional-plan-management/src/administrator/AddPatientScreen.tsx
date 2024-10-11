@@ -8,7 +8,7 @@ const AddPatientScreen: React.FC = () => {
       <div className="w-full max-w-4xl mt-20">
         {/* Title */}
         <h1
-          className="text-5xl font-semibold text-gray-800 mb-6"
+          className="text-5xl font-semibold text-darkBlue mb-6"
           style={{
             fontFamily: "Designer, Comfortaa",
             textTransform: "uppercase",

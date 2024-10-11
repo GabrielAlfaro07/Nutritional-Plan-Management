@@ -12,7 +12,7 @@ const Header: React.FC = () => {
 
   return (
     <>
-      <header className="flex items-center justify-between h-16 p-4 bg-gray-800 border-b border-gray-600 fixed top-0 left-0 right-0 z-50">
+      <header className="flex items-center justify-between h-16 p-4 bg-darkBlue border-b border-gray-600 fixed top-0 left-0 right-0 z-50">
         {/* Sidebar Button (Left-aligned) */}
         <div className="absolute left-4 z-10">
           <SidebarButton onClick={handleSidebarToggle} />

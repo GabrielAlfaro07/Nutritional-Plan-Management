@@ -29,11 +29,33 @@ const PatientDetailsScreen = () => {
   }, [patientId]);
 
   if (loading) {
-    return <p>Loading patient data...</p>;
+    return (
+      <div className="flex items-center justify-center mt-40">
+        <p
+          className="text-2xl text-gray-700"
+          style={{
+            fontFamily: "Designer, Comfortaa",
+          }}
+        >
+          Loading patient data...
+        </p>
+      </div>
+    );
   }
 
   if (!patientData) {
-    return <p>No patient data found.</p>;
+    return (
+      <div className="flex items-center justify-center mt-40">
+        <p
+          className="text-2xl text-gray-700"
+          style={{
+            fontFamily: "Designer, Comfortaa",
+          }}
+        >
+          No patient data found.
+        </p>
+      </div>
+    );
   }
 
   return (
@@ -42,7 +64,7 @@ const PatientDetailsScreen = () => {
       <div className="w-full max-w-4xl mt-20">
         {/* Title */}
         <h1
-          className="text-5xl font-semibold text-gray-800 mb-6"
+          className="text-5xl font-semibold text-darkBlue mb-6"
           style={{
             fontFamily: "Designer, Comfortaa",
             textTransform: "uppercase",

@@ -52,7 +52,7 @@ const Dashboard = () => {
     <div className="relative">
       {/* Background Image */}
       <div
-        className="absolute top-0 left-0 w-full h-4/5 opacity-60 -z-10"
+        className="absolute top-0 left-0 w-full h-4/5 opacity-50 -z-10"
         style={{
           backgroundImage:
             "url(https://hospitalcruzrojacordoba.es/wp-content/uploads/2019/05/Alimentacion-saludable-contra-la-obesidad.jpg.avif)",
@@ -71,13 +71,13 @@ const Dashboard = () => {
               fontFamily: "Designer, Comfortaa",
               textTransform: "uppercase",
             }}
-            className="text-6xl font-semibold text-gray-800 mb-6 text-left"
+            className="text-6xl font-semibold text-darkBlue mb-6 text-left"
           >
             Welcome to the Admin Panel
           </h1>
           <p
             style={{ fontFamily: "Comfortaa" }}
-            className="text-2xl text-gray-700 mb-10 text-left"
+            className="text-2xl text-mediumBlue mb-10 text-left"
           >
             From here you can manage clients and the company's database.
           </p>
