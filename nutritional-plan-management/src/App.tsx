@@ -8,6 +8,7 @@ import Dashboard from "./administrator/Dashboard";
 import AddPatientScreen from "./administrator/AddPatientScreen";
 import EditPatientScreen from "./administrator/EditPatientScreen";
 import PatientDetailsScreen from "./administrator/PatientDetailsScreen";
+import NutritionalPlanScreen from "./administrator/NutritionalPlanScreen";
 
 const App: React.FC = () => {
   useEffect(() => {
@@ -42,6 +43,10 @@ const App: React.FC = () => {
             <Route
               path="/foodExchanges"
               element={<div>Food Exchanges Content</div>}
+            />
+            <Route
+              path="/testNutritionalPlan"
+              element={<NutritionalPlanScreen />}
             />
           </Routes>
         </div>
