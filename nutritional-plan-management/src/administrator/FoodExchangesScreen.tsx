@@ -61,7 +61,14 @@ const FoodExchangesScreen: React.FC = () => {
           </h1>
         </div>
         {isLoading ? (
-          <p>Loading...</p>
+          <p
+            className="text-gray-500 text-center"
+            style={{
+              fontFamily: "Comfortaa",
+            }}
+          >
+            Loading...
+          </p>
         ) : !isAuthenticated ? (
           <p
             className="text-gray-500 text-center"

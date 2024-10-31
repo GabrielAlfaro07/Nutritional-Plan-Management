@@ -6,7 +6,7 @@ interface ExchangesListProps {
 
 const ExchangesList: React.FC<ExchangesListProps> = ({ exchanges }) => {
   return (
-    <div className="border border-gray-300 rounded-3xl p-4 mt-2">
+    <div className="border-b border-x border-gray-200 rounded-3xl p-4 mt-2">
       <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2">
         {exchanges.map((exchange, index) => (
           <li
