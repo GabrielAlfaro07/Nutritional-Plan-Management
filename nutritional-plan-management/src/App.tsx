@@ -1,7 +1,11 @@
+// App.tsx
 import React, { useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { onAuthStateChanged } from "firebase/auth"; // Import this
-import { auth } from "../firebaseConfig"; // Import auth
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "../firebaseConfig";
+import { ToastContainer } from "react-toastify"; // Import ToastContainer
+import "react-toastify/dist/ReactToastify.css"; // Import default Toastify styles
+
 import PatientsListScreen from "./administrator/PatientsListScreen";
 import Header from "./components/headers/Header";
 import Dashboard from "./administrator/Dashboard";
@@ -10,6 +14,8 @@ import EditPatientScreen from "./administrator/EditPatientScreen";
 import PatientDetailsScreen from "./administrator/PatientDetailsScreen";
 import NutritionalPlanScreen from "./administrator/NutritionalPlanScreen";
 import FoodExchangesScreen from "./administrator/FoodExchangesScreen";
+import AddMacronutrientScreen from "./administrator/AddMacronutrientScreen";
+import EditMacronutrientScreen from "./administrator/EditMacronutrientScreen";
 
 const App: React.FC = () => {
   useEffect(() => {
@@ -21,7 +27,7 @@ const App: React.FC = () => {
       }
     });
 
-    return () => unsubscribe(); // Clean up the subscription
+    return () => unsubscribe();
   }, []);
 
   return (
@@ -29,6 +35,8 @@ const App: React.FC = () => {
       <div>
         <Header />
         <div className="mt-16">
+          {/* Add ToastContainer here to enable toasts across your app */}
+          <ToastContainer position="top-right" autoClose={3000} />
           <Routes>
             <Route path="/" element={<Dashboard />} />
             <Route path="/addPatient" element={<AddPatientScreen />} />
@@ -42,6 +50,15 @@ const App: React.FC = () => {
               element={<EditPatientScreen />}
             />
             <Route path="/foodExchanges" element={<FoodExchangesScreen />} />
+            <Route
+              path="/addMacronutrient"
+              element={<AddMacronutrientScreen />}
+            />
+            <Route
+              path="/editMacronutrient/:categoryId"
+              element={<EditMacronutrientScreen />}
+            />
+
             <Route
               path="/testNutritionalPlan"
               element={<NutritionalPlanScreen />}

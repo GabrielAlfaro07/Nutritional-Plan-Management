@@ -1,11 +1,12 @@
+// components/buttons/EditCurrentMacronutrientButton.tsx
 import React from "react";
 
-interface RemoveCurrentMacronutrientButtonProps {
+interface EditCurrentMacronutrientButtonProps {
   onClick: (e: React.MouseEvent) => void;
 }
 
-const RemoveCurrentMacronutrientButton: React.FC<
-  RemoveCurrentMacronutrientButtonProps
+const EditCurrentMacronutrientButton: React.FC<
+  EditCurrentMacronutrientButtonProps
 > = ({ onClick }) => {
   return (
     <button
@@ -15,9 +16,9 @@ const RemoveCurrentMacronutrientButton: React.FC<
         onClick(e);
       }}
     >
-      Remove Exchange
+      Edit Exchange
     </button>
   );
 };
 
-export default RemoveCurrentMacronutrientButton;
+export default EditCurrentMacronutrientButton;

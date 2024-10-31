@@ -1,6 +1,7 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { deletePatient } from "../../services/patientService";
 import { useState } from "react";
+import { toast } from "react-toastify"; // Import toast
 
 const DeleteCurrentPatientButton = () => {
   const { patientId } = useParams<{ patientId: string }>(); // Get patient ID from URL parameters
@@ -17,8 +18,10 @@ const DeleteCurrentPatientButton = () => {
       setIsDeleting(true); // Start loading
       await deletePatient(patientId);
       navigate("/patientsList"); // Navigate to the patient list
+      toast.success("Patient deleted succesfully!");
     } catch (error) {
       console.error("Error deleting patient:", error);
+      toast.error("Failed to delete patient.");
     } finally {
       setIsDeleting(false); // End loading
     }

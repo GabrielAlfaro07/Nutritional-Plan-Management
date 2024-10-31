@@ -1,12 +1,12 @@
 import React from "react";
 
-interface ModalInputProps {
+interface ExchangeInputProps {
   value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   placeholder: string;
 }
 
-const ModalInput: React.FC<ModalInputProps> = ({
+const ExchangeInput: React.FC<ExchangeInputProps> = ({
   value,
   onChange,
   placeholder,
@@ -17,7 +17,7 @@ const ModalInput: React.FC<ModalInputProps> = ({
       value={value}
       onChange={onChange}
       placeholder={placeholder}
-      className="w-full mb-4 py-2 px-4 border rounded-full"
+      className="w-full my-2 py-2 px-4 border rounded-full"
       style={{
         fontFamily: "Comfortaa",
       }}
@@ -25,4 +25,4 @@ const ModalInput: React.FC<ModalInputProps> = ({
   );
 };
 
-export default ModalInput;
+export default ExchangeInput;

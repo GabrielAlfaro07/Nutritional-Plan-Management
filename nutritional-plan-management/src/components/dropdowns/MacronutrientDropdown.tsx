@@ -1,22 +1,25 @@
+// MacronutrientDropdown.tsx
 import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 import ExchangesList from "../lists/ExchangesList";
 import RemoveCurrentMacronutrientButton from "../buttons/RemoveCurrentMacronutrientButton";
+import EditCurrentMacronutrientButton from "../buttons/EditCurrentMacronutrientButton"; // Import the edit button
 
 interface MacronutrientDropdownProps {
   category: string;
   exchanges: string[];
-  onDelete: (category: string) => void; // Add onDelete prop
+  onDelete: (category: string) => void;
+  onEdit: (categoryId: string) => void; // Add onEdit prop
 }
 
 const MacronutrientDropdown: React.FC<MacronutrientDropdownProps> = ({
   category,
   exchanges,
   onDelete,
+  onEdit,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
-
   const toggleOpen = () => setIsOpen(!isOpen);
 
   return (
@@ -35,19 +38,22 @@ const MacronutrientDropdown: React.FC<MacronutrientDropdownProps> = ({
         <h3 className="text-lg font-semibold">{category}</h3>
       </div>
 
-      {/* Smooth Expandable ExchangesList */}
       <div
         className={`transition-all duration-300 overflow-hidden ${
           isOpen ? "max-h-96" : "max-h-0"
         }`}
       >
         <ExchangesList exchanges={exchanges} />
-
-        {/* Add Remove Button here */}
-        <div className="mt-2 flex justify-end">
+        <div className="mt-2 flex justify-end space-x-2">
+          <EditCurrentMacronutrientButton
+            onClick={(e: React.MouseEvent) => {
+              e.stopPropagation();
+              onEdit(category); // Use category as the ID
+            }}
+          />
           <RemoveCurrentMacronutrientButton
             onClick={(e: React.MouseEvent) => {
-              e.stopPropagation(); // Prevents triggering any parent event handlers
+              e.stopPropagation();
               onDelete(category);
             }}
           />

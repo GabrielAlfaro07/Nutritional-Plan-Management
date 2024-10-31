@@ -13,7 +13,7 @@ const AddMacronutrientButton: React.FC<AddMacronutrientButtonProps> = ({
       style={{ fontFamily: "Comfortaa" }}
       onClick={onClick}
     >
-      Add Exchange
+      Add food exchange
     </button>
   );
 };

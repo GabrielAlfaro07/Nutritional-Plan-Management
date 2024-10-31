@@ -1,23 +1,21 @@
-// screens/FoodExchangesScreen.tsx
 import React, { useEffect, useState } from "react";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 import MacronutrientContainer from "../components/containers/MacronutrientContainer";
 import AddNewMacronutrientButton from "../components/buttons/AddNewMacronutrientButton";
-import AddMacronutrientModal from "../components/modals/AddMacronutrientModal";
 import {
   fetchMacronutrientCategories,
-  addMacronutrientCategory,
   removeMacronutrientCategory,
 } from "../services/foodExchangesService";
 import { MacronutrientCategory } from "../services/foodExchangesService";
-import { getAuth } from "firebase/auth"; // Import getAuth
+import { getAuth } from "firebase/auth";
 
 const FoodExchangesScreen: React.FC = () => {
   const [categories, setCategories] = useState<MacronutrientCategory[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isAuthenticated, setIsAuthenticated] = useState(true); // State to track authentication
+  const [isAuthenticated, setIsAuthenticated] = useState(true);
+  const navigate = useNavigate();
 
-  // Fetch data on mount
   useEffect(() => {
     const loadCategories = async () => {
       const auth = getAuth();
@@ -25,8 +23,8 @@ const FoodExchangesScreen: React.FC = () => {
 
       if (!user) {
         setIsAuthenticated(false);
-        setIsLoading(false); // Set loading to false since we don't need to load categories
-        return; // Exit if not authenticated
+        setIsLoading(false);
+        return;
       }
 
       const fetchedCategories = await fetchMacronutrientCategories();
@@ -37,29 +35,20 @@ const FoodExchangesScreen: React.FC = () => {
     loadCategories();
   }, []);
 
-  // Open modal for adding a new macronutrient
-  const handleOpenModal = () => setIsModalOpen(true);
-  const handleCloseModal = () => setIsModalOpen(false);
-
-  // Add a new macronutrient category
-  const handleAddCategory = async (category: string) => {
-    await addMacronutrientCategory(category);
-    const updatedCategories = await fetchMacronutrientCategories();
-    setCategories(updatedCategories);
-    setIsModalOpen(false);
-  };
-
   const handleDeleteCategory = async (category: string) => {
     await removeMacronutrientCategory(category);
     const updatedCategories = await fetchMacronutrientCategories();
     setCategories(updatedCategories);
+    toast.success("Exchange deleted.");
+  };
+
+  const handleEditCategory = (categoryId: string) => {
+    navigate(`/editMacronutrient/${categoryId}`); // Navigate to the edit screen with categoryId
   };
 
   return (
     <div className="relative flex flex-col items-center justify-start px-4 lg:px-0">
-      {/* Content Container */}
       <div className="w-full max-w-4xl mt-20">
-        {/* Title Section */}
         <div className="flex justify-between items-center mb-6">
           <h1
             className="text-5xl font-semibold text-darkBlue"
@@ -71,8 +60,6 @@ const FoodExchangesScreen: React.FC = () => {
             Food Exchanges
           </h1>
         </div>
-
-        {/* Categories List or Loading/Error Message */}
         {isLoading ? (
           <p>Loading...</p>
         ) : !isAuthenticated ? (
@@ -96,19 +83,16 @@ const FoodExchangesScreen: React.FC = () => {
         ) : (
           <MacronutrientContainer
             categories={categories}
-            onDelete={handleDeleteCategory} // Pass onDelete function directly
+            onDelete={handleDeleteCategory}
+            onEdit={handleEditCategory} // Pass handleEditCategory to MacronutrientContainer
           />
         )}
         <div className="flex justify-end mt-4">
-          <AddNewMacronutrientButton onClick={handleOpenModal} />
-        </div>
-        {/* Add Macronutrient Modal */}
-        {isModalOpen && (
-          <AddMacronutrientModal
-            onCancel={handleCloseModal}
-            onAdd={handleAddCategory}
+          {/* Redirect to the new AddMacronutrientScreen when clicked */}
+          <AddNewMacronutrientButton
+            onClick={() => navigate("/addMacronutrient")}
           />
-        )}
+        </div>
       </div>
     </div>
   );
