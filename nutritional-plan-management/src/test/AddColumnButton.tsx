@@ -1,6 +1,4 @@
 import React from "react";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 
 interface AddColumnButtonProps {
   onClick: () => void;
@@ -10,9 +8,10 @@ const AddColumnButton: React.FC<AddColumnButtonProps> = ({ onClick }) => {
   return (
     <button
       onClick={onClick}
-      className="mr-2"
+      className="bg-mediumBlue hover:bg-lightBlue text-white px-4 py-2 rounded-full transition duration-200"
+      style={{ fontFamily: "Comfortaa" }}
     >
-      <FontAwesomeIcon icon={faPlusCircle} style={{ fontSize: "1.5em", color: "orange"  }} />
+      Add column
     </button>
   );
 };

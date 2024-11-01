@@ -1,19 +1,19 @@
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate } from "react-router-dom";
 
 const CreatePlanButton = () => {
   const { patientId } = useParams<{ patientId: string }>(); // Obtiene el ID del paciente de los parámetros de la URL
   const navigate = useNavigate();
   const handleUpdate = () => {
     navigate(`/addPlanNutritional/${patientId}`);
-    
   };
 
   return (
     <button
       onClick={handleUpdate}
-      className="bg-blue-500 hover:bg-blue-700 text-white py-2 px-6 rounded-full transition-colors duration-300 whitespace-nowrap text-base"
+      className="bg-darkOrange hover:bg-lightOrange text-white px-4 py-2 rounded-full transition duration-200"
+      style={{ fontFamily: "Comfortaa" }}
     >
-      Crear Plan Nutricuional
+      Add plan
     </button>
   );
 };

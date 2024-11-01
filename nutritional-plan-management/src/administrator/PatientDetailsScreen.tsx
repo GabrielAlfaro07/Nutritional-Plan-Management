@@ -59,9 +59,9 @@ const PatientDetailsScreen = () => {
   }
 
   return (
-    <div className="relative flex flex-col items-center justify-start px-4 lg:px-0">
+    <div className="relative flex flex-col items-center justify-start lg:px-0">
       {/* Content Container */}
-      <div className="w-full max-w-4xl mt-20">
+      <div className="w-full max-w-5xl mt-20">
         {/* Title */}
         <h1
           className="text-5xl font-semibold text-darkBlue mb-6"
