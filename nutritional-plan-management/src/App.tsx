@@ -12,7 +12,7 @@ import Dashboard from "./administrator/Dashboard";
 import AddPatientScreen from "./administrator/AddPatientScreen";
 import EditPatientScreen from "./administrator/EditPatientScreen";
 import PatientDetailsScreen from "./administrator/PatientDetailsScreen";
-import NutritionalPlanScreen from "./administrator/NutritionalPlanScreen";
+import AddNutritionalPlanScreen from "./administrator/AddNutritionalPlanScreen";
 import FoodExchangesScreen from "./administrator/FoodExchangesScreen";
 import AddMacronutrientScreen from "./administrator/AddMacronutrientScreen";
 import EditMacronutrientScreen from "./administrator/EditMacronutrientScreen";
@@ -61,7 +61,7 @@ const App: React.FC = () => {
 
             <Route
               path="/testNutritionalPlan"
-              element={<NutritionalPlanScreen />}
+              element={<AddNutritionalPlanScreen />}
             />
           </Routes>
         </div>

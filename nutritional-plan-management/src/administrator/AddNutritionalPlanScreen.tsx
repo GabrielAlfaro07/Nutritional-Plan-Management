@@ -1,7 +1,7 @@
 import React from "react";
 import NutritionalPlanContainer from "../components/containers/NutritionalPlanContainer";
 
-const NutritionalPlanScreen: React.FC = () => {
+const AddNutritionalPlanScreen: React.FC = () => {
   return (
     <div className="relative flex flex-col items-center justify-start lg:px-0">
       <div className="w-full max-w-5xl mt-20">
@@ -24,4 +24,4 @@ const NutritionalPlanScreen: React.FC = () => {
   );
 };
 
-export default NutritionalPlanScreen;
+export default AddNutritionalPlanScreen;

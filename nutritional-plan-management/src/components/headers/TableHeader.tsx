@@ -29,7 +29,7 @@ const TableHeader: React.FC<TableHeaderProps> = ({
         style={{ fontFamily: "Comfortaa" }}
       >
         <FontAwesomeIcon icon={faExchangeAlt} className="mr-2" />
-        Intercambio
+        Exchange
       </div>
 
       {/* Header for "Total" with Icon */}
