@@ -1,4 +1,3 @@
-// services/FoodExchangeService.ts
 import {
   collection,
   doc,
@@ -8,54 +7,56 @@ import {
   setDoc,
 } from "firebase/firestore";
 import { db } from "../../firebaseConfig";
-import { getAuth } from "firebase/auth"; // Import getAuth for user authentication
+import { getAuth } from "firebase/auth";
 
 export interface MacronutrientCategory {
   category: string;
   exchanges: string[];
 }
 
-const FOOD_EXCHANGES_COLLECTION = "food exchanges";
+// Helper function to get the reference for the current admin’s food exchanges collection
+const getAdminFoodExchangesCollectionRef = () => {
+  const auth = getAuth();
+  const user = auth.currentUser;
+  if (!user) throw new Error("User not authenticated");
+  return collection(db, `administrators/${user.uid}/food exchanges`);
+};
 
-// Fetch all macronutrient categories and their exchanges, skipping "init"
+// Fetch all macronutrient categories and their exchanges
 export const fetchMacronutrientCategories = async (): Promise<
   MacronutrientCategory[]
 > => {
-  const auth = getAuth(); // Get the auth instance
-  const user = auth.currentUser; // Check the current user
+  try {
+    const categoriesRef = getAdminFoodExchangesCollectionRef();
+    const categoryDocs = await getDocs(categoriesRef);
+    const categories: MacronutrientCategory[] = [];
 
-  // If the user is not authenticated, return an empty array
-  if (!user) {
+    for (const categoryDoc of categoryDocs.docs) {
+      const exchangesCollection = collection(categoryDoc.ref, "exchanges");
+      const exchangesDocs = await getDocs(exchangesCollection);
+      const exchanges = exchangesDocs.docs
+        .filter((doc) => doc.id !== "init")
+        .map((doc) => doc.data().text);
+
+      categories.push({
+        category: categoryDoc.id,
+        exchanges: exchanges.length ? exchanges : [],
+      });
+    }
+    return categories;
+  } catch (error) {
+    console.error("Error fetching categories:", error);
     return [];
   }
-
-  const categoriesRef = collection(db, FOOD_EXCHANGES_COLLECTION);
-  const categoryDocs = await getDocs(categoriesRef);
-  const categories: MacronutrientCategory[] = [];
-
-  for (const categoryDoc of categoryDocs.docs) {
-    const exchangesCollection = collection(categoryDoc.ref, "exchanges");
-    const exchangesDocs = await getDocs(exchangesCollection);
-    const exchanges = exchangesDocs.docs
-      .filter((doc) => doc.id !== "init") // Exclude "init" exchange
-      .map((doc) => doc.data().text); // Assumes each exchange doc has a 'text' field
-
-    categories.push({
-      category: categoryDoc.id,
-      exchanges: exchanges.length ? exchanges : [],
-    }); // Ensure exchanges is an array
-  }
-
-  return categories;
 };
 
+// Add a new macronutrient category with exchanges
 export const addMacronutrientCategory = async (
   category: string,
   exchanges: string[]
 ) => {
-  const categoryRef = doc(collection(db, "food exchanges"), category);
-  await setDoc(categoryRef, {}); // Create category document
-
+  const categoryRef = doc(getAdminFoodExchangesCollectionRef(), category);
+  await setDoc(categoryRef, {});
   const exchangesCollection = collection(categoryRef, "exchanges");
 
   for (const [index, exchange] of exchanges.entries()) {
@@ -65,19 +66,15 @@ export const addMacronutrientCategory = async (
   }
 };
 
+// Remove a macronutrient category
 export const removeMacronutrientCategory = async (category: string) => {
-  const categoryRef = doc(db, "food exchanges", category);
+  const categoryRef = doc(getAdminFoodExchangesCollectionRef(), category);
   const exchangesCollection = collection(categoryRef, "exchanges");
-
-  // Fetch all documents within the exchanges subcollection
   const exchangesDocs = await getDocs(exchangesCollection);
 
-  // Delete each exchange document in the subcollection
   for (const exchangeDoc of exchangesDocs.docs) {
     await deleteDoc(exchangeDoc.ref);
   }
-
-  // Now delete the main category document
   await deleteDoc(categoryRef);
 };
 
@@ -85,12 +82,7 @@ export const removeMacronutrientCategory = async (category: string) => {
 export const fetchMacronutrientCategoryById = async (
   categoryId: string
 ): Promise<MacronutrientCategory | null> => {
-  const auth = getAuth();
-  const user = auth.currentUser;
-
-  if (!user) return null;
-
-  const categoryRef = doc(db, FOOD_EXCHANGES_COLLECTION, categoryId);
+  const categoryRef = doc(getAdminFoodExchangesCollectionRef(), categoryId);
   const categoryDoc = await getDoc(categoryRef);
 
   if (!categoryDoc.exists()) return null;
@@ -101,10 +93,7 @@ export const fetchMacronutrientCategoryById = async (
     .filter((doc) => doc.id !== "init")
     .map((doc) => doc.data().text);
 
-  return {
-    category: categoryDoc.id,
-    exchanges,
-  };
+  return { category: categoryDoc.id, exchanges };
 };
 
 // Update a macronutrient category and its exchanges
@@ -113,26 +102,27 @@ export const updateMacronutrientCategory = async (
   newCategoryName: string,
   exchanges: string[]
 ) => {
-  const categoryRef = doc(db, FOOD_EXCHANGES_COLLECTION, categoryId);
+  const categoryRef = doc(getAdminFoodExchangesCollectionRef(), categoryId);
   const isNameChanged = newCategoryName !== categoryId;
 
   if (isNameChanged) {
-    const newCategoryRef = doc(db, FOOD_EXCHANGES_COLLECTION, newCategoryName);
-
-    // Copy exchanges to the new category
+    const newCategoryRef = doc(
+      getAdminFoodExchangesCollectionRef(),
+      newCategoryName
+    );
     await setDoc(newCategoryRef, {});
     const exchangesCollection = collection(newCategoryRef, "exchanges");
+
     for (const [index, exchange] of exchanges.entries()) {
       await setDoc(doc(exchangesCollection, `exchange${index}`), {
         text: exchange,
       });
     }
-
-    // Delete the old category after copying
     await deleteDoc(categoryRef);
   } else {
     const exchangesCollection = collection(categoryRef, "exchanges");
     const existingExchanges = await getDocs(exchangesCollection);
+
     for (const exchangeDoc of existingExchanges.docs) {
       await deleteDoc(exchangeDoc.ref);
     }
