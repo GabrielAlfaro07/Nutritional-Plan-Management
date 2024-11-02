@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import AddNutritionalPlanContainer from "../components/containers/AddNutritionalPlanContainer";
+import EditNutritionalPlanContainer from "../components/containers/EditNutritionalPlanContainer";
 import { getPatientDetails, PatientData } from "../services/patientService";
 
-const AddNutritionalPlanScreen: React.FC = () => {
+const EditNutritionalPlanScreen: React.FC = () => {
   const { patientId } = useParams<{ patientId: string }>();
   const [patientName, setPatientName] = useState<string>("");
 
@@ -39,7 +39,7 @@ const AddNutritionalPlanScreen: React.FC = () => {
               textTransform: "uppercase",
             }}
           >
-            Add Nutritional Plan
+            Edit Nutritional Plan
           </h1>
         </div>
 
@@ -55,10 +55,10 @@ const AddNutritionalPlanScreen: React.FC = () => {
         )}
 
         {/* Table Section */}
-        <AddNutritionalPlanContainer />
+        <EditNutritionalPlanContainer />
       </div>
     </div>
   );
 };
 
-export default AddNutritionalPlanScreen;
+export default EditNutritionalPlanScreen;

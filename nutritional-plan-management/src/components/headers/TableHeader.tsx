@@ -16,7 +16,7 @@ const TableHeader: React.FC<TableHeaderProps> = ({
 }) => {
   return (
     <div
-      className="grid bg-darkOrange py-2 px-1 mb-1 rounded-full text-white"
+      className="grid bg-darkOrange py-2 px-1 rounded-full text-white"
       style={{
         gridTemplateColumns: `repeat(${
           columns.length + 2

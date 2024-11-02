@@ -1,11 +1,16 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 interface NoteProps {
+  defaultValue?: string;
   onChange: (content: string) => void;
 }
 
-const Note: React.FC<NoteProps> = ({ onChange }) => {
-  const [content, setContent] = useState("");
+const Note: React.FC<NoteProps> = ({ defaultValue = "", onChange }) => {
+  const [content, setContent] = useState(defaultValue);
+
+  useEffect(() => {
+    setContent(defaultValue);
+  }, [defaultValue]);
 
   const handleContentChange = (newContent: string) => {
     setContent(newContent);

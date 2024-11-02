@@ -16,6 +16,7 @@ import AddNutritionalPlanScreen from "./administrator/AddNutritionalPlanScreen";
 import FoodExchangesScreen from "./administrator/FoodExchangesScreen";
 import AddMacronutrientScreen from "./administrator/AddMacronutrientScreen";
 import EditMacronutrientScreen from "./administrator/EditMacronutrientScreen";
+import EditNutritionalPlanScreen from "./administrator/EditNutritionalPlanScreen";
 
 const App: React.FC = () => {
   useEffect(() => {
@@ -58,10 +59,13 @@ const App: React.FC = () => {
               path="/editMacronutrient/:categoryId"
               element={<EditMacronutrientScreen />}
             />
-
             <Route
-              path="/testNutritionalPlan"
+              path="/addNutritionalPlan/:patientId"
               element={<AddNutritionalPlanScreen />}
+            />
+            <Route
+              path="/editNutritionalPlan/:patientId"
+              element={<EditNutritionalPlanScreen />}
             />
           </Routes>
         </div>

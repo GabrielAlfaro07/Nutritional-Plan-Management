@@ -1,5 +1,13 @@
 import { db } from "../../firebaseConfig";
-import { collection, getDocs, addDoc } from "firebase/firestore";
+import {
+  collection,
+  getDocs,
+  doc,
+  getDoc,
+  setDoc,
+  deleteDoc,
+} from "firebase/firestore";
+import { toast } from "react-toastify";
 
 // Constants for collections
 const COLLECTION_PATIENTS = "patients";
@@ -46,21 +54,120 @@ export interface FoodExchange {
   quantities: number[];
 }
 
-// Create a nutritional plan for a specific patient
+// Function to create a new nutritional plan for a patient
 export const createNutritionalPlan = async (
   adminId: string,
   patientId: string,
   planData: NutritionalPlanData
 ) => {
   try {
+    const nutritionalPlanRef = doc(
+      db,
+      `administrators/${adminId}/${COLLECTION_PATIENTS}/${patientId}/${COLLECTION_NUTRITIONAL_PLANS}/currentPlan`
+    );
+
+    const snapshot = await getDoc(nutritionalPlanRef);
+
+    if (snapshot.exists()) {
+      toast.error(
+        "Nutritional plan already exists. Please update the existing plan."
+      );
+      return;
+    }
+
+    // Save the entire plan data including notes
+    await setDoc(nutritionalPlanRef, planData);
+    toast.success("Nutritional plan created successfully!");
+  } catch (error) {
+    console.error("Error creating nutritional plan:", error);
+    throw new Error("Failed to create nutritional plan.");
+  }
+};
+
+// Function to update an existing nutritional plan for a patient
+export const updateNutritionalPlan = async (
+  adminId: string,
+  patientId: string,
+  planData: NutritionalPlanData
+) => {
+  try {
+    const nutritionalPlanRef = doc(
+      db,
+      `administrators/${adminId}/${COLLECTION_PATIENTS}/${patientId}/${COLLECTION_NUTRITIONAL_PLANS}/currentPlan`
+    );
+
+    const snapshot = await getDoc(nutritionalPlanRef);
+
+    if (!snapshot.exists()) {
+      toast.error(
+        "No existing nutritional plan found. Please create a plan first."
+      );
+      return;
+    }
+
+    // Update the entire plan data including notes
+    await setDoc(nutritionalPlanRef, planData, { merge: true });
+    toast.success("Nutritional plan updated successfully!");
+  } catch (error) {
+    console.error("Error updating nutritional plan:", error);
+    throw new Error("Failed to update nutritional plan.");
+  }
+};
+
+// Function to fetch the nutritional plan for a specific patient
+export const fetchNutritionalPlan = async (
+  adminId: string,
+  patientId: string
+) => {
+  try {
+    const nutritionalPlanRef = doc(
+      db,
+      `administrators/${adminId}/${COLLECTION_PATIENTS}/${patientId}/${COLLECTION_NUTRITIONAL_PLANS}/currentPlan`
+    );
+    const snapshot = await getDoc(nutritionalPlanRef);
+
+    if (!snapshot.exists()) {
+      return null; // No plan exists
+    }
+
+    // Return the entire data including notes
+    return snapshot.data();
+  } catch (error) {
+    console.error("Error fetching nutritional plan:", error);
+    throw new Error("Failed to fetch nutritional plan.");
+  }
+};
+
+export const deleteNutritionalPlan = async (
+  adminId: string,
+  patientId: string
+) => {
+  try {
+    const nutritionalPlanRef = doc(
+      db,
+      `administrators/${adminId}/patients/${patientId}/nutritionalPlan/currentPlan`
+    );
+    await deleteDoc(nutritionalPlanRef); // Deletes the document
+    toast.success("Nutritional plan deleted successfully!");
+  } catch (error) {
+    console.error("Error deleting nutritional plan:", error);
+    throw new Error("Failed to delete nutritional plan.");
+  }
+};
+
+// Function to check if a nutritional plan exists for a specific patient
+export const checkIfPlanExists = async (adminId: string, patientId: string) => {
+  try {
     const nutritionalPlanRef = collection(
       db,
       `administrators/${adminId}/${COLLECTION_PATIENTS}/${patientId}/${COLLECTION_NUTRITIONAL_PLANS}`
     );
-    await addDoc(nutritionalPlanRef, { planData });
-    alert(`Nutritional plan created successfully`);
+
+    const snapshot = await getDocs(nutritionalPlanRef);
+    return !snapshot.empty; // Returns true if a plan exists
   } catch (error) {
-    throw new Error("Failed to create nutritional plan");
+    console.error("Error checking for nutritional plan:", error);
+    throw new Error("Failed to check if nutritional plan exists.");
   }
 };
 

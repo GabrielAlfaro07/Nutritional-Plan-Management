@@ -1,6 +1,6 @@
 import React from "react";
-import AddColumnButton from "../../test/AddColumnButton";
-import RemoveColumnButton from "../../test/RemoveColumnButton";
+import AddColumnButton from "../buttons/AddColumnButton";
+import RemoveColumnButton from "../buttons/RemoveColumnButton";
 
 interface TableControlsProps {
   addColumn: () => void;

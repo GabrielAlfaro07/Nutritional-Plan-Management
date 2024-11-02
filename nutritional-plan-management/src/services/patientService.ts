@@ -81,7 +81,9 @@ export const addPatient = async (
 };
 
 // Fetch patient details
-export const getPatientDetails = async (patientId: string) => {
+export const getPatientDetails = async (
+  patientId: string
+): Promise<PatientData | undefined> => {
   try {
     const auth = getAuth();
     const user = auth.currentUser;
@@ -94,13 +96,14 @@ export const getPatientDetails = async (patientId: string) => {
     const patientSnapshot = await getDoc(patientRef);
 
     if (patientSnapshot.exists()) {
-      const patientData = patientSnapshot.data();
+      const patientData = patientSnapshot.data() as PatientData; // Cast to PatientData
       return patientData;
     } else {
       console.log("No patient found with the given ID.");
+      return undefined;
     }
   } catch (error) {
-    console.error("Error fetching patient details: ", error);
+    console.error("Error fetching patient details:", error);
     throw new Error("Failed to fetch patient details.");
   }
 };

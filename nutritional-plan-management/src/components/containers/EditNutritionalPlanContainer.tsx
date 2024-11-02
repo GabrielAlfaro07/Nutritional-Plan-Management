@@ -1,6 +1,11 @@
 import React, { useEffect, useState } from "react";
+import { useParams, useNavigate } from "react-router-dom"; // Import useNavigate
+import { getAuth } from "firebase/auth";
 import TableHeader from "../headers/TableHeader";
 import TableBody from "../tables/TableBody";
+import Controls from "../tables/TableControls";
+import Note from "../notes/Note";
+import CancelButton from "../buttons/CancelButton";
 import {
   addColumn,
   removeColumn,
@@ -8,19 +13,18 @@ import {
   updateCell,
   repositionColumn,
   fetchFoodExchangeCategories,
-  createNutritionalPlan,
+  fetchNutritionalPlan,
+  updateNutritionalPlan,
 } from "../../services/nutritionalPlanService";
-import { RowData } from "../../services/nutritionalPlanService";
-import Controls from "../tables/TableControls";
-import CreatePlanButton from "../../test/CreatePlanButton";
-import Note from "../notes/Note";
-import { NutritionalPlanData } from "../../services/nutritionalPlanService";
-import { useParams } from "react-router-dom";
-import { getAuth } from "firebase/auth";
-import CancelButton from "../buttons/CancelButton";
+import {
+  RowData,
+  NutritionalPlanData,
+} from "../../services/nutritionalPlanService";
+import EditCurrentNutritionalPlanButton from "../../test/EditCurrentNutritionalPlanButton";
 
-const NutritionalPlanContainer: React.FC = () => {
+const EditNutritionalPlanContainer: React.FC = () => {
   const { patientId } = useParams<{ patientId: string }>();
+  const navigate = useNavigate(); // Initialize navigate
   const [columns, setColumns] = useState<string[]>([
     "Desayuno",
     "Merienda AM",
@@ -31,54 +35,53 @@ const NutritionalPlanContainer: React.FC = () => {
   const [data, setData] = useState<RowData[]>([]);
   const [noteContent, setNoteContent] = useState("Contenido de la Nota");
 
-  // Fetch food exchanges as categories from the authenticated admin's database
   useEffect(() => {
-    const fetchAndSetCategories = async () => {
-      try {
-        const auth = getAuth();
-        const user = auth.currentUser;
+    const fetchAndSetCategoriesAndPlan = async () => {
+      const auth = getAuth();
+      const user = auth.currentUser;
 
-        if (!user) {
-          console.error("No authenticated user found");
-          return;
+      if (!user) {
+        console.error("No authenticated user found");
+        return;
+      }
+
+      const adminId = user.uid;
+      const categories = await fetchFoodExchangeCategories(adminId);
+      const formattedData: RowData[] = categories.map((category) => ({
+        exchange: category.name,
+        total: 0,
+        values: Array(columns.length).fill(""),
+      }));
+
+      setData(formattedData);
+
+      // Fetch the existing nutritional plan only if patientId is defined
+      if (patientId) {
+        const planData = await fetchNutritionalPlan(adminId, patientId);
+        if (planData) {
+          setColumns(planData.mealCategories);
+          setData(
+            planData.exchanges.map((exchange: any) => ({
+              exchange: exchange.name,
+              total: exchange.total,
+              values: exchange.quantities.map((qty: number) => qty.toString()),
+            }))
+          );
+          setNoteContent(planData.notes);
         }
-
-        const adminId = user.uid;
-        const categories = await fetchFoodExchangeCategories(adminId);
-
-        const formattedData: RowData[] = categories.map((category) => ({
-          exchange: category.name,
-          total: 0,
-          values: Array(columns.length).fill(""),
-        }));
-
-        setData(formattedData);
-      } catch (error) {
-        console.error("Error setting categories:", error);
+      } else {
+        console.error("Patient ID is undefined");
       }
     };
 
-    fetchAndSetCategories();
-  }, []); // Run only once on component mount
-
-  // Keep the number of 'values' in each row consistent with 'columns'
-  useEffect(() => {
-    setData((prevData) =>
-      prevData.map((row) => ({
-        ...row,
-        values: [
-          ...row.values,
-          ...Array(Math.max(0, columns.length - row.values.length)).fill(""),
-        ].slice(0, columns.length),
-      }))
-    );
-  }, [columns]);
+    fetchAndSetCategoriesAndPlan();
+  }, [patientId]);
 
   const handleNoteChange = (content: string) => {
     setNoteContent(content);
   };
 
-  const createPlan = async () => {
+  const updateAndNavigateBack = async () => {
     const auth = getAuth();
     const user = auth.currentUser;
 
@@ -103,14 +106,14 @@ const NutritionalPlanContainer: React.FC = () => {
       notes: noteContent,
     };
 
-    console.log("Plan created:", planNutritional);
+    await updateNutritionalPlan(adminId, patientId, planNutritional);
 
-    await createNutritionalPlan(adminId, patientId, planNutritional);
+    // Navigate back to the previous route (patient details)
+    navigate(-1);
   };
 
   return (
     <div>
-      {/* Scrollable container for the table */}
       <div className="overflow-x-auto">
         <div className="min-w-full">
           <TableHeader
@@ -137,7 +140,6 @@ const NutritionalPlanContainer: React.FC = () => {
           />
           <Controls
             addColumn={() => addColumn(columns, data, setColumns, setData)}
-            // Remove column functionality will be handled in RemoveColumnControl
             removeColumn={(index) =>
               removeColumn(index, columns, data, setColumns, setData)
             }
@@ -145,15 +147,14 @@ const NutritionalPlanContainer: React.FC = () => {
           />
         </div>
       </div>
-      {/* Note component */}
-      <Note onChange={handleNoteChange} />
+      <Note defaultValue={noteContent} onChange={handleNoteChange} />
 
       <div className="flex justify-end space-x-2">
-        <CreatePlanButton onClick={createPlan} />
         <CancelButton />
+        <EditCurrentNutritionalPlanButton onClick={updateAndNavigateBack} />
       </div>
     </div>
   );
 };
 
-export default NutritionalPlanContainer;
+export default EditNutritionalPlanContainer;
