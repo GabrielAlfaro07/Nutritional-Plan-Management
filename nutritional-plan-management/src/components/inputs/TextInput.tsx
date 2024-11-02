@@ -28,13 +28,14 @@ const TextInput: React.FC<InputProps> = ({
       {label}:
     </label>
     <input
-      className="flex-grow p-2 border border-gray-300 rounded-full"
+      className="flex-grow py-2 px-4 border border-gray-300 rounded-full"
       style={{ fontFamily: "Comfortaa" }}
       type={type}
       name={name}
       value={value}
       onChange={onChange}
       readOnly={readOnly}
+      placeholder="Enter..."
       id={name} // Associate label with input
     />
   </div>

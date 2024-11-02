@@ -1,0 +1,109 @@
+// components/containers/EditFoodExchangeContainer.tsx
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import {
+  updateMacronutrientCategory,
+  fetchMacronutrientCategoryById,
+  MacronutrientCategory,
+} from "../../services/foodExchangesService";
+import AddExchangeButton from "../buttons/AddExchangeButton";
+import RemoveExchangeButton from "../buttons/RemoveExchangeButton";
+import EditMacronutrientButton from "../buttons/EditMacronutrientButton";
+import CancelButton from "../buttons/CancelButton";
+import FoodExchangesForm from "../forms/FoodExchangesForm";
+
+interface EditFoodExchangeContainerProps {
+  categoryId: string;
+}
+
+const EditFoodExchangeContainer: React.FC<EditFoodExchangeContainerProps> = ({
+  categoryId,
+}) => {
+  const [category, setCategory] = useState("");
+  const [exchanges, setExchanges] = useState<string[]>([""]);
+  const navigate = useNavigate();
+
+  // Fetch existing data for editing
+  useEffect(() => {
+    const fetchCategory = async () => {
+      const categoryData: MacronutrientCategory | null =
+        await fetchMacronutrientCategoryById(categoryId);
+      if (categoryData) {
+        setCategory(categoryData.category);
+        setExchanges(categoryData.exchanges);
+      } else {
+        toast.error("Category not found");
+      }
+    };
+    fetchCategory();
+  }, [categoryId]);
+
+  // Handlers
+  const handleAddExchange = () => setExchanges([...exchanges, ""]);
+  const handleRemoveExchange = () => {
+    if (exchanges.length > 1) setExchanges(exchanges.slice(0, -1));
+  };
+  const handleExchangeChange = (index: number, value: string) => {
+    setExchanges(exchanges.map((ex, i) => (i === index ? value : ex)));
+  };
+  const handleUpdateCategory = async () => {
+    if (!category) {
+      toast.error("Please enter a category name.");
+      return;
+    }
+    try {
+      await updateMacronutrientCategory(categoryId, category, exchanges);
+      toast.success("Macronutrient category and exchanges updated!");
+      navigate("/foodExchanges");
+    } catch (error) {
+      toast.error("Error updating category.");
+    }
+  };
+
+  return (
+    <div className="relative flex flex-col items-center justify-start lg:px-0">
+      <div className="w-full max-w-5xl mt-20">
+        <div className="flex justify-between items-center mb-6">
+          <h1
+            className="text-5xl font-semibold text-darkBlue"
+            style={{
+              fontFamily: "Designer, Comfortaa",
+              textTransform: "uppercase",
+            }}
+          >
+            Edit Food Exchange
+          </h1>
+        </div>
+
+        {/* Food Exchanges Form */}
+        <FoodExchangesForm
+          category={category}
+          exchanges={exchanges}
+          onCategoryChange={setCategory}
+          onExchangeChange={handleExchangeChange}
+        />
+
+        {/* Buttons for Cancel and Update Category */}
+        <div className="flex justify-between items-center mt-2">
+          {/* Left side buttons */}
+          <div className="flex space-x-2">
+            <AddExchangeButton onClick={handleAddExchange} />
+            <RemoveExchangeButton
+              onClick={handleRemoveExchange}
+              disabled={exchanges.length <= 1}
+            />
+          </div>
+
+          {/* Right side buttons */}
+          <div className="flex space-x-2">
+            <CancelButton />
+            <EditMacronutrientButton onClick={handleUpdateCategory} />
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default EditFoodExchangeContainer;

@@ -1,26 +1,50 @@
-import { useState, useEffect } from "react";
-import { Patients } from "../components/lists/List";
+// screens/PatientsListScreen.tsx
+import React, { useState, useEffect } from "react";
+import { toast } from "react-toastify";
 import { getPatients } from "../services/patientService";
 import List from "../components/lists/List";
 import SearchBar from "../components/searchbars/SearchBar";
-import AddPatientButton from "../components/buttons/AddNewPatientButton";
+import AddNewPatientButton from "../components/buttons/AddNewPatientButton";
+import { getAuth } from "firebase/auth";
+import { Patients } from "../components/lists/List";
 
-const PatientsListScreen = () => {
-  const [patients, setPatients] = useState<Patients[]>([]); // Store the list of patients
-  const [filteredPatients, setFilteredPatients] = useState<Patients[]>([]); // Store the filtered list of patients
-  const [searchTerm, setSearchTerm] = useState<string>(""); // Search term for filtering
+const PatientsListScreen: React.FC = () => {
+  const [patients, setPatients] = useState<Patients[]>([]);
+  const [filteredPatients, setFilteredPatients] = useState<Patients[]>([]);
+  const [searchTerm, setSearchTerm] = useState<string>("");
+  const [isLoading, setIsLoading] = useState(true);
+  const [isAuthenticated, setIsAuthenticated] = useState(true);
 
-  // Function to get patients and store them in the state
+  // Function to fetch patients and store them in the state
   const fetchPatients = async () => {
     try {
       const patientsList = await getPatients();
-      console.log("Fetched Patients: ", patientsList);
       setPatients(patientsList as Patients[]);
       setFilteredPatients(patientsList as Patients[]); // Initialize with all patients
     } catch (error) {
       console.error("Error fetching patients:", error);
+      toast.error("Error fetching patients.");
     }
   };
+
+  // Authentication and loading logic
+  useEffect(() => {
+    const loadPatients = async () => {
+      const auth = getAuth();
+      const user = auth.currentUser;
+
+      if (!user) {
+        setIsAuthenticated(false);
+        setIsLoading(false);
+        return;
+      }
+
+      await fetchPatients();
+      setIsLoading(false);
+    };
+
+    loadPatients();
+  }, []);
 
   // Filter patients based on the search term
   useEffect(() => {
@@ -30,38 +54,55 @@ const PatientsListScreen = () => {
     setFilteredPatients(filtered);
   }, [searchTerm, patients]);
 
-  // Fetch patients when the component mounts
-  useEffect(() => {
-    fetchPatients();
-  }, []);
-
   return (
-    <div className="relative flex flex-col items-center justify-start px-4 lg:px-0">
-      {/* Content Container */}
-      <div className="w-full max-w-4xl mt-20">
-        {/* Flex container for title and search bar */}
+    <div className="relative flex flex-col items-center justify-start lg:px-0">
+      <div className="w-full max-w-5xl mt-20">
         <div className="flex justify-between items-center mb-6">
-          {/* Title */}
           <h1
             className="text-5xl font-semibold text-darkBlue"
             style={{
               fontFamily: "Designer, Comfortaa",
-              textTransform: "uppercase", // Ensure the text is all caps
+              textTransform: "uppercase",
             }}
           >
             Your Patients
           </h1>
-
-          {/* Search Bar */}
           <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
         </div>
 
-        {/* List of Patients */}
-        <List patients={filteredPatients} />
+        {isLoading ? (
+          <p
+            className="text-gray-500 text-center"
+            style={{
+              fontFamily: "Comfortaa",
+            }}
+          >
+            Loading...
+          </p>
+        ) : !isAuthenticated ? (
+          <p
+            className="text-gray-500 text-center"
+            style={{
+              fontFamily: "Comfortaa",
+            }}
+          >
+            Please log in to view your patients.
+          </p>
+        ) : filteredPatients.length === 0 ? (
+          <p
+            className="text-gray-500 text-center"
+            style={{
+              fontFamily: "Comfortaa",
+            }}
+          >
+            No patients found
+          </p>
+        ) : (
+          <List patients={filteredPatients} />
+        )}
 
-        {/* Button container at the bottom right */}
         <div className="flex justify-end mt-4">
-          <AddPatientButton /> {/* Add patient button */}
+          <AddNewPatientButton />
         </div>
       </div>
     </div>

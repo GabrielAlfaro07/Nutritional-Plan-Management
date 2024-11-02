@@ -6,6 +6,7 @@ import {
   editPatient,
 } from "../../services/patientService";
 import { useNavigate, useParams } from "react-router-dom";
+import { toast } from "react-toastify"; // Import toast
 
 const EditPatientFormContainer: React.FC = () => {
   const { patientId } = useParams<{ patientId: string }>();
@@ -55,12 +56,12 @@ const EditPatientFormContainer: React.FC = () => {
           data.phoneNumber,
           data.nextAppointment
         );
-        alert("Patient successfully updated!");
+        toast.success("Patient updated successfully!");
         navigate(`/patientDetails/${patientId}`);
       }
     } catch (error) {
       console.error("Error updating patient:", error);
-      alert("Failed to update patient.");
+      toast.error("Failed to update patient.");
     }
   };
 
