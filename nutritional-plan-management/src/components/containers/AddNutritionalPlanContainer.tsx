@@ -5,7 +5,7 @@ import TableHeader from "../headers/TableHeader";
 import TableBody from "../tables/TableBody";
 import Controls from "../tables/TableControls";
 import Note from "../notes/Note";
-import AddNewNutritionalPlanButton from "../../test/AddNewNutritionalPlanButton";
+import AddNewNutritionalPlanButton from "../buttons/AddNewNutritionalPlanButton";
 import CancelButton from "../buttons/CancelButton";
 import {
   addColumn,

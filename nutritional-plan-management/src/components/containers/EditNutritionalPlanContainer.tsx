@@ -20,7 +20,7 @@ import {
   RowData,
   NutritionalPlanData,
 } from "../../services/nutritionalPlanService";
-import EditCurrentNutritionalPlanButton from "../../test/EditCurrentNutritionalPlanButton";
+import EditCurrentNutritionalPlanButton from "../buttons/EditCurrentNutritionalPlanButton";
 
 const EditNutritionalPlanContainer: React.FC = () => {
   const { patientId } = useParams<{ patientId: string }>();

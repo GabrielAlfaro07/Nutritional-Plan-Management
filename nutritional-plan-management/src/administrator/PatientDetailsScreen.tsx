@@ -7,9 +7,9 @@ import PatientDetailsSection from "../components/details/PatientDetailsSection";
 import EditCurrentPatientButton from "../components/buttons/EditCurrentPatientButton";
 import DeleteCurrentPatientButton from "../components/buttons/DeleteCurrentPatientButton";
 import CancelPatientDetailsButton from "../components/buttons/CancelPatientDetailsButton";
-import AddNutritionalPlanButton from "../test/AddNutritionalPlanButton";
-import EditNutritionalPlanButton from "../test/EditNutritionalPlanButton";
-import DeleteNutritionalPlanButton from "../test/DeleteNutritionalPlanButton";
+import AddNutritionalPlanButton from "../components/buttons/AddNutritionalPlanButton";
+import EditNutritionalPlanButton from "../components/buttons/EditNutritionalPlanButton";
+import DeleteNutritionalPlanButton from "../components/buttons/DeleteNutritionalPlanButton";
 
 const PatientDetailsScreen = () => {
   const { patientId } = useParams<{ patientId: string }>();

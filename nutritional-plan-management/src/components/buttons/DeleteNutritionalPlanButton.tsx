@@ -1,7 +1,7 @@
 // components/DeleteNutritionalPlanButton.tsx
 
 import React from "react";
-import { deleteNutritionalPlan } from "../services/nutritionalPlanService";
+import { deleteNutritionalPlan } from "../../services/nutritionalPlanService";
 import { useParams } from "react-router-dom";
 import { getAuth } from "firebase/auth";
 
