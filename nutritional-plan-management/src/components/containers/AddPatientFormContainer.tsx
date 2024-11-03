@@ -3,6 +3,7 @@ import AddPatientForm from "../forms/AddPatientForm";
 import { PatientData } from "../../services/patientService";
 import { addPatient } from "../../services/patientService";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify"; // Import toast
 
 const AddPatientFormContainer: React.FC = () => {
   const navigate = useNavigate();
@@ -30,11 +31,11 @@ const AddPatientFormContainer: React.FC = () => {
         data.phoneNumber,
         data.nextAppointment
       );
-      alert("Patient successfully created!");
+      toast.success("Patient created successfully!"); // Success toast
       navigate(`/patientDetails/${patientId}`);
     } catch (error) {
       console.error("Error creating patient:", error);
-      alert("Failed to create patient.");
+      toast.error("EFailed to create patient.");
     }
   };
 
