@@ -55,7 +55,7 @@ const Dashboard = () => {
         className="absolute top-0 left-0 w-full h-4/5 opacity-50 -z-10"
         style={{
           backgroundImage:
-            "url(https://hospitalcruzrojacordoba.es/wp-content/uploads/2019/05/Alimentacion-saludable-contra-la-obesidad.jpg.avif)",
+            "url(https://www.efadeporte.com/blog/wp-content/uploads/2024/10/cabecera-nutricion-deportiva-dieta-mediterranea-efad.jpg)",
           backgroundSize: "cover",
           backgroundPosition: "center",
         }}
